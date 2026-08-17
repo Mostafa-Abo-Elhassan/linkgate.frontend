@@ -1,0 +1,59 @@
+﻿:root {
+    /* Colors */
+    --lg-primary: #0077B5;
+    --lg-primary-hover: #00A0DC;
+    --lg-secondary: #00A0DC;
+    --lg-accent: #F5A623;
+    --lg-background: #F3F6F8;
+    --lg-surface: #FFFFFF;
+    --lg-text: #111827;
+    --lg-text-secondary: #4D4D4D;
+    --lg-text-muted: #6B7280;
+    --lg-border: #E5E7EB;
+    --lg-danger: #EE0000;
+    --lg-success: #059669;
+    --lg-warning: #F59E0B;
+    /* Typography */
+    --lg-font-family: Geist, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --lg-font-mono: "Geist Mono", Monaco, "Courier New", monospace;
+    /* Radius */
+    --lg-radius-sm: 4px;
+    --lg-radius-md: 6px;
+    --lg-radius-lg: 8px;
+    --lg-radius-pill: 9999px;
+    /* Spacing */
+    --lg-space-1: 4px;
+    --lg-space-2: 8px;
+    --lg-space-3: 12px;
+    --lg-space-4: 16px;
+    --lg-space-5: 24px;
+    --lg-space-6: 32px;
+    --lg-space-7: 48px;
+    --lg-space-8: 64px;
+    /* Shadows */
+    --lg-shadow-sm: 0 2px 2px rgba(0, 0, 0, 0.04);
+    --lg-shadow-md: 0 4px 8px rgba(0, 0, 0, 0.08);
+    --lg-shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.12);
+    /* Layout */
+    --lg-container-width: 1200px;
+
+
+}
+/* =========================
+   Dark Theme
+   ========================= */
+[data-theme="dark"] {
+    --lg-primary: #00A0DC;
+    --lg-primary-hover: #38BDF8;
+    --lg-secondary: #38BDF8;
+    --lg-accent: #F5A623;
+    --lg-background: #0B0F14;
+    --lg-surface: #111827;
+    --lg-text: #F9FAFB;
+    --lg-text-secondary: #D1D5DB;
+    --lg-text-muted: #9CA3AF;
+    --lg-border: #374151;
+    --lg-success: #34D399;
+    --lg-warning: #F5A623;
+    --lg-danger: #F87171;
+}

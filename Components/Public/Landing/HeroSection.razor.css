@@ -1,0 +1,713 @@
+.hero-section {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    min-height: 760px;
+    display: flex;
+    align-items: center;
+    background: radial-gradient( circle at 18% 20%, rgba(0, 119, 181, 0.12), transparent 30% ), radial-gradient( circle at 82% 30%, rgba(0, 160, 220, 0.10), transparent 28% ), linear-gradient( 180deg, var(--lg-surface), var(--lg-background) );
+}
+
+
+/* =========================
+   Background
+   ========================= */
+
+.hero-grid {
+    position: absolute;
+    inset: 0;
+    z-index: -3;
+    background-image: linear-gradient( rgba(0, 119, 181, 0.035) 1px, transparent 1px ), linear-gradient( 90deg, rgba(0, 119, 181, 0.035) 1px, transparent 1px );
+    background-size: 42px 42px;
+    mask-image: linear-gradient( to bottom, black 0%, black 55%, transparent 100% );
+}
+
+.hero-glow {
+    position: absolute;
+    z-index: -2;
+    border-radius: 50%;
+    filter: blur(30px);
+    pointer-events: none;
+}
+
+.hero-glow-primary {
+    width: 420px;
+    height: 420px;
+    top: -180px;
+    right: 8%;
+    background: rgba(0, 119, 181, 0.12);
+    animation: heroGlowPrimary 8s ease-in-out infinite;
+}
+
+.hero-glow-secondary {
+    width: 280px;
+    height: 280px;
+    bottom: -100px;
+    left: 8%;
+    background: rgba(0, 160, 220, 0.08);
+    animation: heroGlowSecondary 10s ease-in-out infinite;
+}
+
+
+/* =========================
+   Layout
+   ========================= */
+
+.hero-container {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(400px, 0.95fr);
+    align-items: center;
+    gap: 70px;
+    padding-top: 80px;
+    padding-bottom: 80px;
+}
+
+
+/* =========================
+   Content
+   ========================= */
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    animation: heroContentEnter 900ms cubic-bezier(.16, 1, .3, 1) both;
+}
+
+.hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    margin-bottom: 22px;
+    padding: 7px 13px;
+    border: 1px solid rgba(0, 119, 181, 0.16);
+    border-radius: var(--lg-radius-pill);
+    background: rgba(255, 255, 255, 0.72);
+    backdrop-filter: blur(12px);
+    color: var(--lg-primary);
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.hero-eyebrow-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--lg-primary);
+    box-shadow: 0 0 0 4px rgba(0, 119, 181, 0.10);
+    animation: pulseDot 2s ease-in-out infinite;
+}
+
+.hero-title {
+    max-width: 720px;
+    margin: 0;
+    color: var(--lg-text);
+    font-size: clamp(42px, 5vw, 68px);
+    font-weight: 600;
+    line-height: 1.04;
+    letter-spacing: -2.8px;
+}
+
+    .hero-title span {
+        color: transparent;
+        background: linear-gradient( 135deg, var(--lg-primary), var(--lg-secondary) );
+        background-clip: text;
+        -webkit-background-clip: text;
+    }
+
+.hero-description {
+    max-width: 620px;
+    margin-top: 25px;
+    margin-bottom: 0;
+    color: var(--lg-text-secondary);
+    font-size: 18px;
+    line-height: 1.75;
+}
+
+.hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 34px;
+}
+
+    .hero-actions .btn {
+        min-height: 48px;
+        padding-inline: 22px;
+        transition: transform 180ms ease, box-shadow 180ms ease, background-color 180ms ease;
+    }
+
+.hero-primary-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.hero-btn-arrow {
+    font-size: 18px;
+    transition: transform 180ms ease;
+}
+
+.hero-primary-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(0, 119, 181, 0.22), 0 0 0 4px rgba(0, 119, 181, 0.06);
+}
+
+    .hero-primary-btn:hover .hero-btn-arrow {
+        transform: translateX(4px);
+    }
+
+.hero-secondary-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 24px rgba(17, 24, 39, 0.08);
+}
+
+
+/* =========================
+   Stats
+   ========================= */
+
+.hero-stats {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 24px;
+    margin-top: 50px;
+}
+
+.hero-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+    .hero-stat strong {
+        color: var(--lg-text);
+        font-size: 23px;
+        font-weight: 600;
+        letter-spacing: -0.5px;
+    }
+
+    .hero-stat span {
+        color: var(--lg-text-muted);
+        font-size: 12px;
+    }
+
+.hero-stat-divider {
+    width: 1px;
+    height: 34px;
+    background: var(--lg-border);
+}
+
+
+/* =========================
+   Visual
+   ========================= */
+
+.hero-visual {
+    position: relative;
+    min-height: 520px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-orbit {
+    position: absolute;
+    border: 1px solid rgba(0, 119, 181, 0.08);
+    border-radius: 50%;
+}
+
+.hero-orbit-one {
+    width: 470px;
+    height: 470px;
+    animation: orbitRotate 20s linear infinite;
+}
+
+.hero-orbit-two {
+    width: 610px;
+    height: 610px;
+    border-color: rgba(0, 160, 220, 0.05);
+    animation: orbitRotateReverse 28s linear infinite;
+}
+
+
+/* =========================
+   Dashboard
+   ========================= */
+
+.hero-dashboard {
+    position: relative;
+    z-index: 2;
+    width: min(100%, 440px);
+    overflow: hidden;
+    border: 1px solid rgba(229, 231, 235, 0.9);
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.88);
+    backdrop-filter: blur(24px);
+    box-shadow: 0 35px 80px rgba(17, 24, 39, 0.13), 0 8px 24px rgba(0, 119, 181, 0.08);
+    transform: perspective(1000px) rotateY(-5deg) rotateX(2deg);
+    transition: transform 500ms cubic-bezier(.16, 1, .3, 1), box-shadow 500ms ease;
+    animation: dashboardFloat 6s ease-in-out infinite;
+}
+
+    .hero-dashboard:hover {
+        transform: perspective(1000px) rotateY(0) rotateX(0) translateY(-8px);
+        box-shadow: 0 45px 100px rgba(17, 24, 39, 0.16), 0 10px 30px rgba(0, 119, 181, 0.10);
+    }
+
+.dashboard-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--lg-border);
+}
+
+.dashboard-dots {
+    display: flex;
+    gap: 5px;
+}
+
+    .dashboard-dots span {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--lg-border);
+    }
+
+.dashboard-status {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--lg-success);
+    font-size: 11px;
+    font-weight: 500;
+}
+
+    .dashboard-status span,
+    .account-live span {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--lg-success);
+        box-shadow: 0 0 0 4px rgba(5, 150, 105, 0.10);
+    }
+
+.dashboard-content {
+    padding: 28px;
+}
+
+.dashboard-label {
+    color: var(--lg-text-muted);
+    font-size: 12px;
+}
+
+.dashboard-value {
+    margin-top: 7px;
+    color: var(--lg-text);
+    font-size: 38px;
+    font-weight: 600;
+    letter-spacing: -1.5px;
+}
+
+.dashboard-growth {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin-top: 5px;
+    color: var(--lg-text-muted);
+    font-size: 11px;
+}
+
+    .dashboard-growth span {
+        color: var(--lg-success);
+        font-weight: 600;
+    }
+
+.dashboard-chart {
+    height: 150px;
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+    margin-top: 28px;
+    padding-top: 15px;
+    border-bottom: 1px solid var(--lg-border);
+}
+
+    .dashboard-chart span {
+        flex: 1;
+        min-width: 0;
+        border-radius: 5px 5px 0 0;
+        background: linear-gradient( 180deg, var(--lg-primary), rgba(0, 119, 181, 0.20) );
+        transform-origin: bottom;
+        animation: chartGrow 900ms cubic-bezier(.16, 1, .3, 1) both;
+    }
+
+        .dashboard-chart span:nth-child(1) {
+            animation-delay: 150ms;
+        }
+
+        .dashboard-chart span:nth-child(2) {
+            animation-delay: 190ms;
+        }
+
+        .dashboard-chart span:nth-child(3) {
+            animation-delay: 230ms;
+        }
+
+        .dashboard-chart span:nth-child(4) {
+            animation-delay: 270ms;
+        }
+
+        .dashboard-chart span:nth-child(5) {
+            animation-delay: 310ms;
+        }
+
+        .dashboard-chart span:nth-child(6) {
+            animation-delay: 350ms;
+        }
+
+        .dashboard-chart span:nth-child(7) {
+            animation-delay: 390ms;
+        }
+
+        .dashboard-chart span:nth-child(8) {
+            animation-delay: 430ms;
+        }
+
+        .dashboard-chart span:nth-child(9) {
+            animation-delay: 470ms;
+        }
+
+        .dashboard-chart span:nth-child(10) {
+            animation-delay: 510ms;
+        }
+
+.dashboard-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    border-top: 1px solid var(--lg-border);
+    background: rgba(243, 246, 248, 0.45);
+}
+
+.dashboard-account {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.account-avatar {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    background: var(--lg-primary);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.dashboard-account strong,
+.dashboard-account span {
+    display: block;
+}
+
+.dashboard-account strong {
+    color: var(--lg-text);
+    font-size: 11px;
+}
+
+.dashboard-account span {
+    margin-top: 2px;
+    color: var(--lg-text-muted);
+    font-size: 10px;
+}
+
+.account-live {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    color: var(--lg-success);
+    font-size: 10px;
+    font-weight: 500;
+}
+
+
+/* =========================
+   Floating cards
+   ========================= */
+
+.hero-floating-card {
+    position: absolute;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 15px;
+    border: 1px solid rgba(229, 231, 235, 0.9);
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.88);
+    backdrop-filter: blur(18px);
+    box-shadow: 0 15px 35px rgba(17, 24, 39, 0.10);
+    animation: floatingCard 5s ease-in-out infinite;
+}
+
+    .hero-floating-card strong,
+    .hero-floating-card span {
+        display: block;
+    }
+
+    .hero-floating-card strong {
+        color: var(--lg-text);
+        font-size: 11px;
+    }
+
+    .hero-floating-card span {
+        margin-top: 2px;
+        color: var(--lg-text-muted);
+        font-size: 9px;
+    }
+
+.hero-floating-card-top {
+    top: 72px;
+    right: -15px;
+}
+
+.hero-floating-card-bottom {
+    bottom: 72px;
+    left: -15px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 3px;
+    animation-delay: -2s;
+}
+
+.floating-icon {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 7px;
+    background: rgba(5, 150, 105, 0.10);
+    color: var(--lg-success);
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.floating-card-label {
+    font-size: 9px !important;
+}
+
+.hero-floating-card-bottom strong {
+    color: var(--lg-success);
+    font-size: 14px;
+}
+
+
+/* =========================
+   Animations
+   ========================= */
+
+@keyframes heroContentEnter {
+    from {
+        opacity: 0;
+        transform: translateY(28px);
+        filter: blur(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0);
+    }
+}
+
+@keyframes heroGlowPrimary {
+    0%, 100% {
+        transform: translate3d(0, 0, 0) scale(1);
+    }
+
+    50% {
+        transform: translate3d(-35px, 25px, 0) scale(1.08);
+    }
+}
+
+@keyframes heroGlowSecondary {
+    0%, 100% {
+        transform: translate3d(0, 0, 0);
+    }
+
+    50% {
+        transform: translate3d(25px, -20px, 0);
+    }
+}
+
+@keyframes pulseDot {
+    0%, 100% {
+        box-shadow: 0 0 0 4px rgba(0, 119, 181, 0.10);
+    }
+
+    50% {
+        box-shadow: 0 0 0 7px rgba(0, 119, 181, 0.04);
+    }
+}
+
+@keyframes dashboardFloat {
+    0%, 100% {
+        transform: perspective(1000px) rotateY(-5deg) rotateX(2deg) translateY(0);
+    }
+
+    50% {
+        transform: perspective(1000px) rotateY(-5deg) rotateX(2deg) translateY(-10px);
+    }
+}
+
+@keyframes floatingCard {
+    0%, 100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-8px);
+    }
+}
+
+@keyframes orbitRotate {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes orbitRotateReverse {
+    from {
+        transform: rotate(360deg);
+    }
+
+    to {
+        transform: rotate(0deg);
+    }
+}
+
+@keyframes chartGrow {
+    from {
+        transform: scaleY(0);
+    }
+
+    to {
+        transform: scaleY(1);
+    }
+}
+
+
+/* =========================
+   Responsive
+   ========================= */
+
+@media (max-width: 991.98px) {
+    .hero-section {
+        min-height: auto;
+    }
+
+    .hero-container {
+        grid-template-columns: 1fr;
+        gap: 60px;
+    }
+
+    .hero-content {
+        text-align: center;
+    }
+
+    .hero-description {
+        margin-inline: auto;
+    }
+
+    .hero-actions,
+    .hero-stats {
+        justify-content: center;
+    }
+
+    .hero-visual {
+        min-height: 500px;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .hero-container {
+        padding-top: 55px;
+        padding-bottom: 55px;
+    }
+
+    .hero-title {
+        font-size: 40px;
+        letter-spacing: -1.5px;
+    }
+
+    .hero-description {
+        font-size: 16px;
+    }
+
+    .hero-stats {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+    }
+
+    .hero-stat-divider {
+        display: none;
+    }
+
+    .hero-stat strong {
+        font-size: 18px;
+    }
+
+    .hero-stat span {
+        font-size: 10px;
+    }
+
+    .hero-visual {
+        min-height: 390px;
+    }
+
+    .hero-dashboard {
+        width: 92%;
+        transform: none;
+    }
+
+    .hero-floating-card-top {
+        top: 25px;
+        right: -5px;
+    }
+
+    .hero-floating-card-bottom {
+        bottom: 25px;
+        left: -5px;
+    }
+
+    .hero-orbit-one {
+        width: 330px;
+        height: 330px;
+    }
+
+    .hero-orbit-two {
+        width: 400px;
+        height: 400px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-section *,
+    .hero-section::after {
+        animation: none !important;
+        transition: none !important;
+    }
+}

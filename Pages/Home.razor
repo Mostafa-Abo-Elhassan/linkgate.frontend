@@ -1,0 +1,465 @@
+﻿@* @page "/"
+
+<PageTitle>LinkGate Design System Test</PageTitle>
+
+<div class="container py-5">
+
+    <!-- Header -->
+    <div class="mb-5">
+        <span class="badge bg-primary mb-3">
+            LinkGate Design System
+        </span>
+
+        <h1 class="display-5 fw-semibold">
+            Design System Test
+        </h1>
+
+        <p class="lead text-muted">
+            Bootstrap components styled with the LinkGate theme.
+        </p>
+    </div>
+
+
+    <!-- Buttons -->
+    <section class="mb-5">
+        <h2 class="h4 mb-4">Buttons</h2>
+
+        <div class="d-flex flex-wrap gap-3">
+            <button class="btn btn-primary">
+                Primary Button
+            </button>
+
+            <button class="btn btn-secondary">
+                Secondary Button
+            </button>
+
+            <button class="btn btn-success">
+                Success
+            </button>
+
+            <button class="btn btn-warning">
+                Warning
+            </button>
+
+            <button class="btn btn-danger">
+                Danger
+            </button>
+
+            <button class="btn btn-outline-primary">
+                Outline
+            </button>
+
+            <button class="btn btn-primary" disabled>
+                Disabled
+            </button>
+        </div>
+    </section>
+
+
+    <!-- Cards -->
+    <section class="mb-5">
+        <h2 class="h4 mb-4">Cards</h2>
+
+        <div class="row g-4">
+
+            <div class="col-md-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <span class="badge bg-primary mb-3">
+                            Accounts
+                        </span>
+
+                        <h3 class="h5">
+                            LinkedIn Accounts
+                        </h3>
+
+                        <p class="text-muted">
+                            Manage connected accounts and sessions.
+                        </p>
+
+                        <button class="btn btn-primary">
+                            View Accounts
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <span class="badge bg-success mb-3">
+                            Active
+                        </span>
+
+                        <h3 class="h5">
+                            Live Sessions
+                        </h3>
+
+                        <p class="text-muted">
+                            Monitor active sessions in real time.
+                        </p>
+
+                        <button class="btn btn-secondary">
+                            Open Sessions
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <span class="badge bg-warning mb-3">
+                            Pending
+                        </span>
+
+                        <h3 class="h5">
+                            Applications
+                        </h3>
+
+                        <p class="text-muted">
+                            Review pending applications.
+                        </p>
+
+                        <button class="btn btn-primary">
+                            Review
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- Forms -->
+    <section class="mb-5">
+        <h2 class="h4 mb-4">Forms</h2>
+
+        <div class="card">
+            <div class="card-body">
+
+                <div class="row g-4">
+
+                    <div class="col-md-6">
+                        <label class="form-label">
+                            Full Name
+                        </label>
+
+                        <input class="form-control"
+                               placeholder="Enter your full name" />
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">
+                            Email
+                        </label>
+
+                        <input type="email"
+                               class="form-control"
+                               placeholder="name@example.com" />
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">
+                            Account Type
+                        </label>
+
+                        <select class="form-select">
+                            <option>Select account type</option>
+                            <option>Personal</option>
+                            <option>Business</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">
+                            LinkedIn URL
+                        </label>
+
+                        <input class="form-control"
+                               placeholder="https://linkedin.com/in/..." />
+                    </div>
+
+                    <div class="col-12">
+                        <label class="form-label">
+                            Notes
+                        </label>
+
+                        <textarea class="form-control"
+                                  rows="4"
+                                  placeholder="Write something...">
+                        </textarea>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="form-check">
+                            <input class="form-check-input"
+                                   type="checkbox"
+                                   id="terms" />
+
+                            <label class="form-check-label"
+                                   for="terms">
+                                I agree to the terms and conditions.
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <button class="btn btn-primary">
+                            Submit Application
+                        </button>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Alerts -->
+    <section class="mb-5">
+        <h2 class="h4 mb-4">Alerts</h2>
+
+        <div class="alert alert-primary">
+            Your application has been submitted successfully.
+        </div>
+
+        <div class="alert alert-success">
+            Account connected successfully.
+        </div>
+
+        <div class="alert alert-warning">
+            Your session will expire soon.
+        </div>
+
+        <div class="alert alert-danger">
+            Something went wrong. Please try again.
+        </div>
+    </section>
+
+
+    <!-- Table -->
+    <section class="mb-5">
+        <h2 class="h4 mb-4">Table</h2>
+
+        <div class="card">
+            <div class="card-body p-0">
+
+                <div class="table-responsive">
+
+                    <table class="table mb-0 align-middle">
+
+                        <thead>
+                            <tr>
+                                <th>Account</th>
+                                <th>Status</th>
+                                <th>Sessions</th>
+                                <th>Last Activity</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            <tr>
+                                <td>
+                                    John Doe
+                                </td>
+
+                                <td>
+                                    <span class="badge bg-success">
+                                        Active
+                                    </span>
+                                </td>
+
+                                <td>
+                                    3
+                                </td>
+
+                                <td>
+                                    2 minutes ago
+                                </td>
+
+                                <td>
+                                    <button class="btn btn-sm btn-outline-primary">
+                                        View
+                                    </button>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    Sarah Smith
+                                </td>
+
+                                <td>
+                                    <span class="badge bg-warning">
+                                        Pending
+                                    </span>
+                                </td>
+
+                                <td>
+                                    1
+                                </td>
+
+                                <td>
+                                    15 minutes ago
+                                </td>
+
+                                <td>
+                                    <button class="btn btn-sm btn-outline-primary">
+                                        View
+                                    </button>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    Michael Brown
+                                </td>
+
+                                <td>
+                                    <span class="badge bg-danger">
+                                        Offline
+                                    </span>
+                                </td>
+
+                                <td>
+                                    0
+                                </td>
+
+                                <td>
+                                    2 hours ago
+                                </td>
+
+                                <td>
+                                    <button class="btn btn-sm btn-outline-primary">
+                                        View
+                                    </button>
+                                </td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Badges -->
+    <section class="mb-5">
+
+        <h2 class="h4 mb-4">
+            Badges & States
+        </h2>
+
+        <div class="d-flex flex-wrap gap-2">
+
+            <span class="badge bg-primary">
+                Primary
+            </span>
+
+            <span class="badge bg-success">
+                Success
+            </span>
+
+            <span class="badge bg-warning">
+                Warning
+            </span>
+
+            <span class="badge bg-danger">
+                Danger
+            </span>
+
+            <span class="badge bg-secondary">
+                Secondary
+            </span>
+
+        </div>
+
+    </section>
+
+
+    <!-- Pagination -->
+    <section class="mb-5">
+
+        <h2 class="h4 mb-4">
+            Pagination
+        </h2>
+
+        <nav>
+            <ul class="pagination">
+
+                <li class="page-item disabled">
+                    <a class="page-link">
+                        Previous
+                    </a>
+                </li>
+
+                <li class="page-item active">
+                    <a class="page-link">
+                        1
+                    </a>
+                </li>
+
+                <li class="page-item">
+                    <a class="page-link">
+                        2
+                    </a>
+                </li>
+
+                <li class="page-item">
+                    <a class="page-link">
+                        3
+                    </a>
+                </li>
+
+                <li class="page-item">
+                    <a class="page-link">
+                        Next
+                    </a>
+                </li>
+
+            </ul>
+        </nav>
+
+    </section>
+
+
+    <!-- Final CTA -->
+    <section class="mb-5">
+
+        <div class="card">
+            <div class="card-body text-center py-5">
+
+                <span class="badge bg-primary mb-3">
+                    LinkGate
+                </span>
+
+                <h2 class="h3">
+                    Ready to get started?
+                </h2>
+
+                <p class="text-muted">
+                    Everything above is using Bootstrap
+                    with the LinkGate Theme.
+                </p>
+
+                <button class="btn btn-primary">
+                    Get Started
+                </button>
+
+            </div>
+        </div>
+
+    </section>
+
+</div> *@

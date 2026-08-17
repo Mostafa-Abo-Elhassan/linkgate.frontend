@@ -1,0 +1,148 @@
+﻿@inherits LayoutComponentBase
+@inject IJSRuntime JS
+
+<div class="public-layout">
+
+    <header class="public-navbar border-bottom">
+        <nav class="navbar navbar-expand-lg bg-white">
+            <div class="container">
+
+                <a class="navbar-brand fw-semibold text-primary"
+                   href="/">
+                    LinkGate
+                </a>
+
+                <button class="navbar-toggler"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#publicNavbar">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse"
+                     id="publicNavbar">
+
+                    <ul class="navbar-nav mx-auto gap-lg-2">
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="#calculator">
+                                حاسبة الأرباح
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="#how-it-works">
+                                كيف يعمل؟
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="#faq">
+                                الأسئلة الشائعة
+                            </a>
+                        </li>
+
+                    </ul>
+                    <button class="btn btn-secondary"
+                            @onclick="ToggleTheme">
+                        @(isDark ? "Light Mode" : "Dark Mode")
+                    </button>
+                    <button class="btn btn-secondary"
+                            @onclick="ToggleLanguage">
+                        @(isArabic ? "English" : "العربية")
+                    </button>
+                    <a href="#application"
+                       class="btn btn-primary">
+                        ابدأ الآن
+                    </a>
+
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        @Body
+    </main>
+
+    <footer class="public-footer border-top">
+        <div class="container py-5">
+
+            <div class="row g-4">
+
+                <div class="col-lg-6">
+                    <h5 class="fw-semibold mb-2">
+                        LinkGate
+                    </h5>
+
+                    <p class="text-muted mb-0">
+                        منصة لإدارة وتشغيل حسابات LinkedIn
+                        من خلال نظام مؤتمت ومنظم.
+                    </p>
+                </div>
+
+                <div class="col-6 col-lg-3">
+                    <h6 class="fw-semibold">
+                        روابط
+                    </h6>
+
+                    <div class="d-flex flex-column gap-2">
+                        <a href="/referral">برنامج الإحالة</a>
+                        <a href="/how-it-works">كيف يعمل؟</a>
+                        <a href="/policies">الشروط والسياسات</a>
+                    </div>
+                </div>
+
+                <div class="col-6 col-lg-3">
+                    <h6 class="fw-semibold">
+                        تواصل
+                    </h6>
+
+                    <a href="/contact">
+                        تواصل معنا
+                    </a>
+                </div>
+
+            </div>
+
+            <hr class="my-4" />
+
+            <div class="d-flex flex-column flex-md-row
+                justify-content-between gap-2">
+
+                <small class="text-muted">
+                    © @DateTime.Now.Year LinkGate
+                </small>
+
+                <small class="text-muted">
+                    جميع الحقوق محفوظة
+                </small>
+
+            </div>
+
+        </div>
+    </footer>
+
+</div>
+
+                    
+@code {
+    private bool isDark;
+
+    private async Task ToggleTheme()
+    {
+        isDark = await JS.InvokeAsync<bool>("themeManager.toggle");
+    }
+
+
+    private bool isArabic = true;
+
+    private async Task ToggleLanguage()
+    {
+        isArabic = !isArabic;
+
+        await JS.InvokeVoidAsync(
+            "languageManager.setLanguage",
+            isArabic ? "ar" : "en");
+    }
+}

@@ -1,0 +1,47 @@
+﻿html,
+body {
+    margin: 0;
+    padding: 0;
+    font-family: var(--lg-font-family);
+    color: var(--lg-text);
+    background: var(--lg-background);
+}
+
+body {
+    min-height: 100vh;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: var(--lg-text);
+    font-weight: 600;
+}
+
+p {
+    color: var(--lg-text);
+}
+
+a {
+    color: var(--lg-primary);
+    text-decoration: none;
+}
+
+    a:hover {
+        color: var(--lg-primary-hover);
+    }
+
+button,
+input,
+select,
+textarea {
+    font-family: inherit;
+}
+
+:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--lg-primary);
+}

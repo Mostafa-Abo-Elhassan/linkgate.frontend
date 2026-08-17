@@ -1,0 +1,515 @@
+﻿/* =========================================================
+   LinkGate Design System
+   Bootstrap Component Theme
+   ========================================================= */
+
+
+
+/* Global Component Animation */
+
+.btn,
+.card,
+.form-control,
+.form-select,
+.badge,
+.alert,
+.page-link {
+    transition: background-color 150ms ease, border-color 150ms ease, color 150ms ease, box-shadow 150ms ease, transform 150ms ease;
+}
+
+    .btn:not(:disabled):hover {
+        transform: translateY(-1px);
+    }
+
+    .btn:not(:disabled):active {
+        transform: translateY(0);
+    }
+
+
+/* =========================================================
+   1. Buttons
+   ========================================================= */
+
+.btn {
+    min-height: 44px;
+    padding: 12px 24px;
+    font-family: var(--lg-font-family);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    border-radius: var(--lg-radius-pill);
+    transition: background-color 150ms ease, border-color 150ms ease, color 150ms ease, box-shadow 150ms ease, transform 150ms ease;
+}
+
+.btn-primary {
+    --bs-btn-color: #FFFFFF;
+    --bs-btn-bg: var(--lg-primary);
+    --bs-btn-border-color: var(--lg-primary);
+    --bs-btn-hover-color: #FFFFFF;
+    --bs-btn-hover-bg: var(--lg-secondary);
+    --bs-btn-hover-border-color: var(--lg-secondary);
+    --bs-btn-active-color: #FFFFFF;
+    --bs-btn-active-bg: var(--lg-primary);
+    --bs-btn-active-border-color: var(--lg-primary);
+    --bs-btn-disabled-color: #999999;
+    --bs-btn-disabled-bg: #CCCCCC;
+    --bs-btn-disabled-border-color: #CCCCCC;
+}
+
+    .btn-primary:hover {
+        transform: translateY(-1px);
+    }
+
+.btn-secondary {
+    --bs-btn-color: var(--lg-text);
+    --bs-btn-bg: var(--lg-surface);
+    --bs-btn-border-color: var(--lg-border);
+    --bs-btn-hover-color: var(--lg-text);
+    --bs-btn-hover-bg: var(--lg-background);
+    --bs-btn-hover-border-color: var(--lg-secondary);
+    --bs-btn-active-color: var(--lg-text);
+    --bs-btn-active-bg: var(--lg-border);
+    --bs-btn-active-border-color: var(--lg-border);
+}
+
+.btn-outline-primary {
+    --bs-btn-color: var(--lg-primary);
+    --bs-btn-border-color: var(--lg-primary);
+    --bs-btn-hover-color: #FFFFFF;
+    --bs-btn-hover-bg: var(--lg-primary);
+    --bs-btn-hover-border-color: var(--lg-primary);
+}
+
+.btn-link {
+    color: var(--lg-primary);
+    font-weight: 400;
+}
+
+    .btn-link:hover {
+        color: var(--lg-secondary);
+    }
+
+
+/* =========================================================
+   2. Forms
+   ========================================================= */
+
+.form-label {
+    margin-bottom: 8px;
+    color: var(--lg-text);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+}
+
+.form-control,
+.form-select {
+    min-height: 36px;
+    padding: 10px 12px;
+    color: var(--lg-text);
+    background-color: var(--lg-surface);
+    border: 1px solid var(--lg-border);
+    border-radius: var(--lg-radius-md);
+    font-family: var(--lg-font-family);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    box-shadow: none;
+}
+
+    .form-control::placeholder {
+        color: var(--lg-text-muted);
+    }
+
+    .form-control:hover,
+    .form-select:hover {
+        border-color: #D0D0D0;
+    }
+
+    .form-control:focus,
+    .form-select:focus {
+        color: var(--lg-text);
+        background-color: var(--lg-surface);
+        border-color: var(--lg-primary);
+        box-shadow: 0 0 0 3px rgba(0, 119, 181, 0.10);
+    }
+
+    .form-control:disabled,
+    .form-select:disabled {
+        color: var(--lg-text-muted);
+        background-color: var(--lg-background);
+        border-color: var(--lg-border);
+    }
+
+.form-text {
+    margin-top: 4px;
+    color: var(--lg-text-secondary);
+    font-size: 12px;
+    line-height: 16px;
+}
+
+
+/* =========================================================
+   3. Validation
+   ========================================================= */
+
+.form-control.is-invalid,
+.form-select.is-invalid {
+    border-color: var(--lg-danger);
+}
+
+    .form-control.is-invalid:focus,
+    .form-select.is-invalid:focus {
+        border-color: var(--lg-danger);
+        box-shadow: 0 0 0 3px rgba(238, 0, 0, 0.10);
+    }
+
+.invalid-feedback {
+    margin-top: 4px;
+    color: var(--lg-danger);
+    font-size: 12px;
+    line-height: 16px;
+}
+
+.form-control.is-valid,
+.form-select.is-valid {
+    border-color: var(--lg-success);
+}
+
+
+/* =========================================================
+   4. Checkboxes / Radios
+   ========================================================= */
+
+.form-check {
+    min-height: 24px;
+    margin-bottom: 8px;
+}
+
+.form-check-input {
+    border-color: var(--lg-border);
+}
+
+    .form-check-input:checked {
+        background-color: var(--lg-primary);
+        border-color: var(--lg-primary);
+    }
+
+    .form-check-input:focus {
+        border-color: var(--lg-primary);
+        box-shadow: 0 0 0 3px rgba(0, 119, 181, 0.10);
+    }
+
+.form-check-label {
+    color: var(--lg-text);
+    font-size: 14px;
+    line-height: 20px;
+}
+
+
+/* =========================================================
+   5. Cards
+   ========================================================= */
+
+.card {
+    color: var(--lg-text);
+    background-color: var(--lg-surface);
+    border: 1px solid var(--lg-border);
+    border-radius: var(--lg-radius-md);
+    box-shadow: var(--lg-shadow-sm);
+}
+
+.card-header,
+.card-footer {
+    background-color: transparent;
+    border-color: var(--lg-border);
+}
+
+.card-title {
+    color: var(--lg-text);
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+}
+
+.card-text {
+    color: var(--lg-text);
+    font-size: 16px;
+    line-height: 24px;
+}
+
+
+/* =========================================================
+   6. Badges
+   ========================================================= */
+
+.badge {
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 16px;
+}
+
+.bg-primary {
+    background-color: var(--lg-primary) !important;
+}
+
+.bg-secondary {
+    background-color: var(--lg-secondary) !important;
+}
+
+.bg-warning {
+    background-color: var(--lg-warning) !important;
+}
+
+.bg-danger {
+    background-color: var(--lg-danger) !important;
+}
+
+.bg-success {
+    background-color: var(--lg-success) !important;
+}
+
+.text-primary {
+    color: var(--lg-primary) !important;
+}
+
+.text-secondary {
+    color: var(--lg-text-secondary) !important;
+}
+
+.text-muted {
+    color: var(--lg-text-muted) !important;
+}
+
+
+/* =========================================================
+   7. Alerts
+   ========================================================= */
+
+.alert {
+    border-radius: var(--lg-radius-md);
+    border-width: 1px;
+    font-size: 14px;
+    line-height: 20px;
+}
+
+.alert-primary {
+    color: var(--lg-primary);
+    background-color: rgba(0, 119, 181, 0.08);
+    border-color: rgba(0, 119, 181, 0.20);
+}
+
+.alert-success {
+    color: var(--lg-success);
+    background-color: rgba(5, 150, 105, 0.08);
+    border-color: rgba(5, 150, 105, 0.20);
+}
+
+.alert-warning {
+    color: var(--lg-warning);
+    background-color: rgba(245, 166, 35, 0.10);
+    border-color: rgba(245, 166, 35, 0.25);
+}
+
+.alert-danger {
+    color: var(--lg-danger);
+    background-color: rgba(238, 0, 0, 0.08);
+    border-color: rgba(238, 0, 0, 0.20);
+}
+
+
+/* =========================================================
+   8. Tables
+   ========================================================= */
+
+.table {
+    margin-bottom: 0;
+    color: var(--lg-text);
+    font-size: 14px;
+    line-height: 20px;
+}
+
+    .table > :not(caption) > * > * {
+        padding: 12px 16px;
+        border-bottom-color: var(--lg-border);
+    }
+
+    .table > thead > tr > th {
+        color: var(--lg-text-secondary);
+        background-color: var(--lg-background);
+        font-size: 12px;
+        font-weight: 500;
+        line-height: 16px;
+    }
+
+    .table > tbody > tr:hover > * {
+        background-color: rgba(0, 119, 181, 0.03);
+    }
+
+
+
+.table {
+    --bs-table-bg: var(--lg-surface);
+    --bs-table-color: var(--lg-text);
+    --bs-table-border-color: var(--lg-border);
+    color: var(--lg-text);
+    background-color: var(--lg-surface);
+}
+
+    .table > :not(caption) > * > * {
+        color: var(--lg-text);
+        background-color: var(--lg-surface);
+        border-bottom-color: var(--lg-border);
+    }
+
+
+    .table thead th {
+        background-color: var(--lg-surface);
+        color: var(--lg-text);
+    }
+
+/* =========================================================
+   9. Dropdowns
+   ========================================================= */
+
+.dropdown-menu {
+    padding: 8px 0;
+    background-color: var(--lg-surface);
+    border: 1px solid var(--lg-border);
+    border-radius: var(--lg-radius-md);
+    box-shadow: var(--lg-shadow-lg);
+}
+
+.dropdown-item {
+    padding: 8px 16px;
+    color: var(--lg-text);
+    font-size: 14px;
+    line-height: 20px;
+}
+
+    .dropdown-item:hover,
+    .dropdown-item:focus {
+        color: var(--lg-text);
+        background-color: var(--lg-background);
+    }
+
+    .dropdown-item.active,
+    .dropdown-item:active {
+        color: #FFFFFF;
+        background-color: var(--lg-primary);
+    }
+
+
+/* =========================================================
+   10. Navigation
+   ========================================================= */
+
+.nav-link {
+    color: var(--lg-text);
+    font-size: 14px;
+    font-weight: 400;
+    border-radius: var(--lg-radius-sm);
+}
+
+    .nav-link:hover {
+        color: var(--lg-text);
+        background-color: rgba(0, 0, 0, 0.05);
+    }
+
+    .nav-link.active {
+        color: var(--lg-primary);
+    }
+
+
+/* =========================================================
+   11. Pagination
+   ========================================================= */
+
+.pagination {
+    gap: 4px;
+}
+
+.page-link {
+    min-width: 36px;
+    min-height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--lg-text);
+    background-color: var(--lg-surface);
+    border: 1px solid var(--lg-border);
+    border-radius: var(--lg-radius-sm);
+    font-size: 14px;
+}
+
+    .page-link:hover {
+        color: var(--lg-primary);
+        background-color: var(--lg-background);
+        border-color: var(--lg-secondary);
+    }
+
+.page-item.active .page-link {
+    color: #FFFFFF;
+    background-color: var(--lg-primary);
+    border-color: var(--lg-primary);
+}
+
+
+/* =========================================================
+   12. Modal
+   ========================================================= */
+
+.modal-content {
+    background-color: var(--lg-surface);
+    border: 1px solid var(--lg-border);
+    border-radius: var(--lg-radius-md);
+    box-shadow: var(--lg-shadow-lg);
+}
+
+.modal-header,
+.modal-footer {
+    border-color: var(--lg-border);
+}
+
+.modal-title {
+    color: var(--lg-text);
+    font-size: 16px;
+    font-weight: 500;
+}
+
+
+/* =========================================================
+   13. Spinner
+   ========================================================= */
+
+.spinner-border {
+    color: var(--lg-primary);
+}
+
+
+/* =========================================================
+   14. Focus
+   ========================================================= */
+
+.btn:focus-visible,
+.form-control:focus-visible,
+.form-select:focus-visible,
+.form-check-input:focus-visible,
+.dropdown-item:focus-visible,
+.page-link:focus-visible,
+.nav-link:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px #FFFFFF, 0 0 0 4px var(--lg-primary);
+}
+
+
+/* =========================================================
+   15. Disabled
+   ========================================================= */
+
+button:disabled,
+.btn.disabled {
+    cursor: not-allowed;
+}

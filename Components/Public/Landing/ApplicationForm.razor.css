@@ -1,0 +1,82 @@
+/* CSS for ApplicationForm component */
+.application-section {
+    padding-block: 96px;
+    background: var(--lg-background);
+}
+
+.application-wrapper {
+    max-width: 760px;
+    margin-inline: auto;
+}
+
+.application-card {
+    padding: 40px;
+    border: 1px solid var(--lg-border);
+    border-radius: 12px;
+    background: var(--lg-surface);
+    box-shadow: var(--lg-shadow-md);
+}
+
+.application-header {
+    margin-bottom: 32px;
+}
+
+.application-title {
+    margin: 0;
+    font-size: 32px;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+}
+
+.application-description {
+    margin-top: 10px;
+    color: var(--lg-text-muted);
+    line-height: 1.6;
+}
+
+.application-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.application-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.application-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.application-label {
+    color: var(--lg-text);
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.application-help {
+    color: var(--lg-text-muted);
+    font-size: 12px;
+}
+
+.application-submit {
+    margin-top: 8px;
+}
+
+@media (max-width: 767.98px) {
+    .application-card {
+        padding: 24px;
+    }
+
+    .application-row {
+        grid-template-columns: 1fr;
+    }
+
+    .application-title {
+        font-size: 26px;
+    }
+}
