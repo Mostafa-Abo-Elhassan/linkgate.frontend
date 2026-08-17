@@ -178,6 +178,7 @@
             box-shadow: 0 0 0 3px rgba(0, 119, 181, 0.12);
         }
 
+
 .public-navbar {
     position: sticky;
     top: 0;
@@ -534,5 +535,56 @@
 
     .navbar-toggle.is-open span:nth-child(3) {
         transform: translateY(-7px) rotate(-45deg);
+    }
+}
+
+
+/* =========================
+   Desktop Navbar
+   ========================= */
+
+@media (min-width: 992px) {
+
+    .navbar-menu {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+    }
+
+    .navbar-nav {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .navbar-actions {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 12px;
+    }
+}
+
+
+.navbar-menu {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex: 1;
+    margin-inline-start: 64px;
+}
+
+.navbar-toggle {
+    display: none;
+}
+
+@media (max-width: 991.98px) {
+    .navbar-toggle {
+        display: flex;
     }
 }
