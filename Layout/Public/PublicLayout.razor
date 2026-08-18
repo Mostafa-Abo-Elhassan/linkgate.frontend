@@ -10,7 +10,7 @@
                 <div class="navbar-main">
 
                     <a class="navbar-brand"
-                       href="/">
+                       href="#hero">
                         LinkGate
                     </a>
 
@@ -39,16 +39,24 @@
                             </a>
                         </li>
 
-                        <li>
-                            <a class="nav-link" href="#how-it-works">
-                                كيف يعمل؟
-                            </a>
-                        </li>
+                      
 
-                        <li>
-                            <a class="nav-link" href="#faq">
-                                الأسئلة الشائعة
-                            </a>
+                     
+
+                        <li class="nav-link">
+                            <NavLink class="nav-link" href="/how-it-works" Match="NavLinkMatch.All">بنشتغل إزاي؟</NavLink>
+                        </li>
+                        <li class="nav-link">
+                            <NavLink class="nav-link" href="/earnings" Match="NavLinkMatch.All">نظام الأرباح</NavLink>
+                        </li>
+                        <li class="nav-link">
+                            <NavLink class="nav-link" href="/referral" Match="NavLinkMatch.All">نظام الإحالة</NavLink>
+                        </li>
+                        <li class="nav-link">
+                            <NavLink class="nav-link" href="/safety" Match="NavLinkMatch.All">انت في أمان</NavLink>
+                        </li>
+                        <li class="nav-link">
+                            <NavLink class="nav-link" href="/policies" Match="NavLinkMatch.All">الشروط والأحكام</NavLink>
                         </li>
 
                     </ul>
@@ -57,7 +65,7 @@
 
                         <button class="btn btn-secondary"
                                 @onclick="ToggleTheme">
-                            @(isDark ? "Light Mode" : "Dark Mode")
+                            @(isDark ? "Light" : "Dark")
                         </button>
 
                         @* Language *@
@@ -67,7 +75,7 @@
                         @(isArabic ? "English" : "العربية")
                     </button>
                     *@
-
+                        <a href="/login" class="text-dark fw-bold text-decoration-none login-link">تسجيل الدخول</a>
                         <a href="#application"
                            class="btn btn-primary">
                             ابدأ الآن

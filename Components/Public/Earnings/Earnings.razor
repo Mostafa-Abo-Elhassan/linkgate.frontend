@@ -1,0 +1,38 @@
+﻿@page "/earnings"
+@layout PublicLayout
+
+<PageTitle>الأرباح والعوائد - LinkGate</PageTitle>
+
+<section class="page-section">
+    <div class="container app-container">
+        <div class="row align-items-center mb-5">
+            <div class="col-lg-6 animate-fade-up">
+                <h1 class="display-5 fw-bold mb-3">الفلوس دي بتيجي منين؟</h1>
+                <p class="lead text-muted">
+                    عشان تكون مطمن ومفيش أي شك جواك من الناحية الشرعية أو المهنية؛
+                    شغلنا بالكامل مبني على توجيه الحملات الإعلانية للشركات الأجنبية في الأسواق الغربية (أمريكا وأوروبا).
+                </p>
+                <ul class="earnings-list mt-4">
+                    <li>
+                        <span class="icon-check">✓</span>
+                        <strong>مش بنستهدف عرب أو مصريين:</strong> الإعلانات بتنزل لأجانب بس.
+                    </li>
+                    <li>
+                        <span class="icon-check">✓</span>
+                        <strong>حلال وشرعي وواضح:</strong> إحنا بنعمل Lead Generation لشركات B2B عادية جداً (سوفت وير، عقارات، خدمات).
+                    </li>
+                    <li>
+                        <span class="icon-check">✓</span>
+                        <strong>الدفع بالدولار:</strong> العوائد بتكون قوية لأننا بنتعامل مع عملاء في أسواق أجنبية.
+                    </li>
+                </ul>
+            </div>
+            <div class="col-lg-6 mt-5 mt-lg-0 animate-fade-up" style="animation-delay: 0.1s;">
+                <div class="calculator-wrapper">
+                    <!-- Component حاسبة الأرباح اللي بنيته قبل كدا -->
+                    <ProfitCalculator />
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

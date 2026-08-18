@@ -588,3 +588,11 @@
         display: flex;
     }
 }
+
+.login-link {
+    transition: color 0.2s ease;
+}
+
+    .login-link:hover {
+        color: var(--lg-primary) !important;
+    }

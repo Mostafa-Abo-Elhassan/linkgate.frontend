@@ -1,0 +1,64 @@
+/* CSS for Safety component */
+.safety-hero {
+/*    background-color: #050505;*/
+    background-image: linear-gradient(180deg, rgba(255,255,255,0.02) 0%, transparent 100%);
+    color: #fff;
+    padding-block: 80px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.text-light-muted {
+    color: #A1A1AA;
+    max-width: 600px;
+    margin-inline: auto;
+}
+
+.safety-card {
+    background: var(--lg-surface);
+    padding: var(--lg-space-5);
+    border-radius: var(--lg-radius-lg);
+    border: 1px solid var(--lg-border);
+    height: 100%;
+}
+
+    .safety-card.danger-card {
+        background: rgba(238, 0, 0, 0.02);
+        border-color: rgba(238, 0, 0, 0.1);
+    }
+
+.safety-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+    .safety-list li {
+        padding-block: 12px;
+        border-bottom: 1px solid var(--lg-border);
+        color: var(--lg-text-secondary);
+        font-size: 15px;
+        line-height: 1.6;
+    }
+
+        .safety-list li:last-child {
+            border-bottom: none;
+        }
+
+    .safety-list strong {
+        color: var(--lg-text);
+        display: block;
+        margin-bottom: 4px;
+    }
+
+.animate-fade-up {
+    animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+@keyframes fadeUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
