@@ -1,5 +1,5 @@
 /* CSS for ApplicationForm component */
-.application-section {
+/*.application-section {
     padding-block: 96px;
     background: var(--lg-background);
 }
@@ -79,4 +79,58 @@
     .application-title {
         font-size: 26px;
     }
+}*/
+
+
+.application-section {
+    background-color: #F3F6F8;
+}
+
+.form-card {
+    border-radius: 8px;
+    border: 1px solid #E5E7EB !important;
+}
+
+.form-label {
+    font-size: 13px;
+    font-weight: 500;
+    color: #111827;
+}
+
+.form-control, .form-select {
+    border-color: #E5E7EB;
+    font-size: 14px;
+    padding: 8px 12px;
+    border-radius: 6px;
+}
+
+    .form-control:focus, .form-select:focus {
+        border-color: #0077B5;
+        box-shadow: 0 0 0 3px rgba(0, 119, 181, 0.15);
+    }
+
+.btn-primary {
+    background-color: #0077B5;
+    border-color: #0077B5;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: background-color 0.2s ease;
+}
+
+    .btn-primary:hover {
+        background-color: #006097;
+        border-color: #005582;
+    }
+
+.success-icon {
+    width: 50px;
+    height: 50px;
+    background-color: #E6F4EA;
+    color: #059669;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    margin: 0 auto;
 }

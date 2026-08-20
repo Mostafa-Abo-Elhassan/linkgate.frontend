@@ -1,124 +1,282 @@
-﻿<section id="application"
-         class="application-section py-5">
+﻿@using LinkGate.frontend.Models.Applications.Requests
+@using LinkGate.frontend.Services.Applications
+@using System.ComponentModel.DataAnnotations
 
-    <div class="container">
+@inject ApplicationService AppService
 
-        <div class="row justify-content-center">
+<section class="application-section py-5" id="apply-section" dir="rtl">
+    <div class="container" style="max-width: 800px;">
 
-            <div class="col-lg-8">
-
-                <div class="text-center mb-5">
-
-                    <span class="badge bg-light text-primary mb-3">
-                        Get Started
-                    </span>
-
-                    <h2 class="fw-semibold">
-                        قدم طلبك الآن
-                    </h2>
-
-                    <p class="text-muted">
-                        املأ البيانات التالية لإرسال طلبك للمراجعة.
-                    </p>
-
-                </div>
-
-                <div class="card">
-
-                    <div class="card-body p-4 p-lg-5">
-
-                        <div class="row g-4">
-
-                            <div class="col-md-6">
-                                <label class="form-label">
-                                    الاسم الكامل
-                                </label>
-
-                                <input class="form-control"
-                                       placeholder="الاسم الكامل" />
-                            </div>
-
-                            <div class="col-md-6">
-                                <label class="form-label">
-                                    رقم الهاتف
-                                </label>
-
-                                <input class="form-control"
-                                       placeholder="رقم الهاتف" />
-                            </div>
-
-                            <div class="col-md-6">
-                                <label class="form-label">
-                                    البريد الإلكتروني
-                                </label>
-
-                                <input type="email"
-                                       class="form-control"
-                                       placeholder="example@email.com" />
-                            </div>
-
-                            <div class="col-md-6">
-                                <label class="form-label">
-                                    LinkedIn URL
-                                </label>
-
-                                <input class="form-control"
-                                       placeholder="https://linkedin.com/in/..." />
-                            </div>
-
-                            <div class="col-12">
-                                <label class="form-label">
-                                    صورة عدد الـ Connections
-                                </label>
-
-                                <input type="file"
-                                       class="form-control" />
-                            </div>
-
-                            <div class="col-12">
-                                <label class="form-label">
-                                    صورة عمر الحساب
-                                </label>
-
-                                <input type="file"
-                                       class="form-control" />
-                            </div>
-
-                            <div class="col-12">
-
-                                <div class="form-check">
-
-                                    <input class="form-check-input"
-                                           type="checkbox"
-                                           id="terms" />
-
-                                    <label class="form-check-label"
-                                           for="terms">
-                                        أوافق على الشروط والسياسات.
-                                    </label>
-
-                                </div>
-
-                            </div>
-
-                            <div class="col-12">
-
-                                <button class="btn btn-primary w-100">
-                                    تقديم الطلب
-                                </button>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
+        <div class="form-card bg-white p-4 p-md-5 rounded-3 shadow-sm border border-light text-end">
+            <div class="text-center mb-4">
+                <h3 class="fw-bold text-dark mb-1">تقديم طلب الانضمام</h3>
+                <p class="text-muted small">يرجى ملء جميع البيانات بدقة.</p>
             </div>
 
+            @if (isSubmittedSuccess)
+            {
+                <div class="success-card text-center py-5">
+                    <div class="success-icon mb-3 fs-1 text-success">✓</div>
+                    <h4 class="fw-bold text-dark">تم إرسال الطلب بنجاح</h4>
+                    <p class="text-muted small">حالة طلبك حالياً <span class="badge bg-warning text-dark">قيد المراجعة</span>. سنتواصل معك قريباً.</p>
+                    <button class="btn btn-outline-primary btn-sm mt-3" @onclick="ResetForm">تقديم طلب آخر</button>
+                </div>
+            }
+            else
+            {
+                <EditForm Model="model" OnValidSubmit="HandleSubmit">
+                    <DataAnnotationsValidator />
+
+                    @if (!string.IsNullOrEmpty(errorMessage))
+                    {
+                        <div class="alert alert-danger py-2 small mb-4" role="alert">
+                            @errorMessage
+                        </div>
+                    }
+
+                    <div class="row g-3">
+                        <!-- Full Name -->
+                        <div class="col-md-6">
+                            <label class="form-label small fw-medium text-dark">الاسم الكامل</label>
+                            <InputText class="form-control form-control-sm" @bind-Value="model.FullName" placeholder="مثال: أحمد محمد علي" />
+                            <ValidationMessage For="@(() => model.FullName)" class="text-danger small" />
+                        </div>
+
+                        <!-- Phone Number -->
+                        <div class="col-md-6">
+                            <label class="form-label small fw-medium text-dark">رقم الهاتف (واتساب)</label>
+                            <InputText class="form-control form-control-sm" @bind-Value="model.PhoneNumber" placeholder="مثال: 01012345678" />
+                            <ValidationMessage For="@(() => model.PhoneNumber)" class="text-danger small" />
+                        </div>
+
+                        <!-- Email -->
+                        <div class="col-md-6">
+                            <label class="form-label small fw-medium text-dark">البريد الإلكتروني</label>
+                            <InputText class="form-control form-control-sm" @bind-Value="model.Email" placeholder="مثال: name@example.com" />
+                            <ValidationMessage For="@(() => model.Email)" class="text-danger small" />
+                        </div>
+
+                        <!-- LinkedIn URL -->
+                        <div class="col-md-6">
+                            <label class="form-label small fw-medium text-dark">رابط حساب لينكد إن</label>
+                            <InputText class="form-control form-control-sm" @bind-Value="model.LinkedInProfileUrl" placeholder="https://linkedin.com/in/username" />
+                            <ValidationMessage For="@(() => model.LinkedInProfileUrl)" class="text-danger small" />
+                        </div>
+
+                        <!-- Number of Connections -->
+                        <div class="col-md-6">
+                            <label class="form-label small fw-medium text-dark">عدد الـ Connections</label>
+                            <InputNumber class="form-control form-control-sm" @bind-Value="model.NumberOfConnections" placeholder="مثال: 1500" />
+                            <ValidationMessage For="@(() => model.NumberOfConnections)" class="text-danger small" />
+                        </div>
+
+                        <!-- Account Creation Date (Improved UI: Month & Year Selectors mapped to DateOnly) -->
+                        <div class="col-md-6">
+                            <label class="form-label small fw-medium text-dark">تاريخ إنشاء الحساب (الشهر والسنة)</label>
+                            <div class="row g-2">
+                                <div class="col-7">
+                                    <select class="form-select form-select-sm" @onchange="OnMonthChanged">
+                                        <option value="">اختر الشهر</option>
+                                        <option value="01">يناير (01)</option>
+                                        <option value="02">فبراير (02)</option>
+                                        <option value="03">مارس (03)</option>
+                                        <option value="04">أبريل (04)</option>
+                                        <option value="05">مايو (05)</option>
+                                        <option value="06">يونيو (06)</option>
+                                        <option value="07">يوليو (07)</option>
+                                        <option value="08">أغسطس (08)</option>
+                                        <option value="09">سبتمبر (09)</option>
+                                        <option value="10">أكتوبر (10)</option>
+                                        <option value="11">نوفمبر (11)</option>
+                                        <option value="12">ديسمبر (12)</option>
+                                    </select>
+                                </div>
+                                <div class="col-5">
+                                    <select class="form-select form-select-sm" @onchange="OnYearChanged">
+                                        <option value="">السنة</option>
+                                        @for (int year = DateTime.Now.Year; year >= 2010; year--)
+                                        {
+                                            <option value="@year">@year</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <ValidationMessage For="@(() => model.LinkedInAccountCreationDate)" class="text-danger small" />
+                        </div>
+
+                        <!-- Connections Screenshot Upload -->
+                        <div class="col-md-6">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <label class="form-label small fw-medium text-dark mb-1">صورة عدد الـ Connections</label>
+                                <a href="https://res.cloudinary.com/dfgunzope/image/upload/v1787188553/gf1xaykqjwmzespvdyib.png" target="_blank" class="small text-decoration-none text-primary">مثال توضيحي</a>
+                            </div>
+                            <InputFile class="form-control form-control-sm" OnChange="@(e => UploadScreenshot(e, true))" />
+                            <span class="text-muted d-block mt-1" style="font-size: 10px;">أقصى حجم: 2 ميجابايت (جميع الصيغ مقبولة)</span>
+                            <ValidationMessage For="@(() => model.NumberOfConnectionsScreenshotUrl)" class="text-danger small" />
+                            @if (!string.IsNullOrEmpty(model.NumberOfConnectionsScreenshotUrl))
+                            {
+                                <span class="text-success d-block mt-1" style="font-size: 11px;">✓ تم رفع الصورة بنجاح</span>
+                            }
+                        </div>
+
+                        <!-- Creation Date Screenshot Upload -->
+                        <div class="col-md-6">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <label class="form-label small fw-medium text-dark mb-1">صورة تاريخ إنشاء الحساب</label>
+                                <a href="https://res.cloudinary.com/dfgunzope/image/upload/v1787188553/gf1xaykqjwmzespvdyib.png" target="_blank" class="small text-decoration-none text-primary">مثال توضيحي</a>
+                            </div>
+                            <InputFile class="form-control form-control-sm" OnChange="@(e => UploadScreenshot(e, false))" />
+                            <span class="text-muted d-block mt-1" style="font-size: 10px;">أقصى حجم: 2 ميجابايت (جميع الصيغ مقبولة)</span>
+                            <ValidationMessage For="@(() => model.AccountCreationDateScreenshotUrl)" class="text-danger small" />
+                            @if (!string.IsNullOrEmpty(model.AccountCreationDateScreenshotUrl))
+                            {
+                                <span class="text-success d-block mt-1" style="font-size: 11px;">✓ تم رفع الصورة بنجاح</span>
+                            }
+                        </div>
+
+                        <!-- Notes -->
+                        <div class="col-12">
+                            <label class="form-label small fw-medium text-dark">ملاحظات إضافية (اختياري)</label>
+                            <InputTextArea class="form-control form-control-sm" rows="3" @bind-Value="model.Notes" placeholder="اكتب أي ملاحظات إضافية هنا..." />
+                        </div>
+
+                        <!-- Terms & Policies Checkbox -->
+                        <div class="col-12 mt-3">
+                            <div class="form-check">
+                                <InputCheckbox class="form-check-input" @bind-Value="model.AcceptTermsAndPolicies" id="termsCheck" />
+                                <label class="form-check-label small text-muted" for="termsCheck">
+                                    أوافق على <a href="/policies" target="_blank" class="text-primary text-decoration-none fw-medium">الشروط والأحكام</a>
+                                </label>
+                            </div>
+                            <ValidationMessage For="@(() => model.AcceptTermsAndPolicies)" class="text-danger small" />
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="col-12 mt-4">
+                            <button type="submit" class="btn btn-primary w-100 py-2 fw-medium text-white shadow-sm" disabled="@isSubmitting">
+                                @if (isSubmitting)
+                                {
+                                    <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                                    <span>جاري إرسال الطلب...</span>
+                                }
+                                else
+                                {
+                                    <span>تقديم الطلب</span>
+                                }
+                            </button>
+                        </div>
+                    </div>
+                </EditForm>
+            }
         </div>
-
     </div>
-
 </section>
+
+@code {
+    private ApplicationSubmitRequest model = new();
+    private bool isSubmitting = false;
+    private bool isSubmittedSuccess = false;
+    private string errorMessage = string.Empty;
+
+    private string selectedMonth = "";
+    private string selectedYear = "";
+
+    private void OnMonthChanged(ChangeEventArgs e)
+    {
+        selectedMonth = e.Value?.ToString() ?? "";
+        UpdateCreationDate();
+    }
+
+    private void OnYearChanged(ChangeEventArgs e)
+    {
+        selectedYear = e.Value?.ToString() ?? "";
+        UpdateCreationDate();
+    }
+
+    private void UpdateCreationDate()
+    {
+        if (!string.IsNullOrEmpty(selectedMonth) && !string.IsNullOrEmpty(selectedYear))
+        {
+            if (int.TryParse(selectedYear, out int year) && int.TryParse(selectedMonth, out int month))
+            {
+                model.LinkedInAccountCreationDate = new DateOnly(year, month, 1);
+            }
+        }
+        else
+        {
+            model.LinkedInAccountCreationDate = default;
+        }
+    }
+
+    private async Task UploadScreenshot(InputFileChangeEventArgs e, bool isConnections)
+    {
+        var file = e.File;
+        if (file != null)
+        {
+            try
+            {
+                errorMessage = string.Empty;
+
+                long maxAllowedSize = 2 * 1024 * 1024; // 2 MB
+                if (file.Size > maxAllowedSize)
+                {
+                    errorMessage = "حجم الصورة يتجاوز الحد الأقصى المسموح به (2 ميجابايت).";
+                    return;
+                }
+
+                var format = file.ContentType;
+                if (string.IsNullOrEmpty(format) || !format.StartsWith("image/"))
+                {
+                    format = "image/png";
+                }
+
+                var buffer = new byte[file.Size];
+                using var stream = file.OpenReadStream(maxAllowedSize);
+                await stream.ReadAsync(buffer);
+
+                using var content = new MultipartFormDataContent();
+                var fileContent = new ByteArrayContent(buffer);
+                fileContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(format);
+                content.Add(fileContent, "Image", file.Name);
+
+                var uploadedUrl = await AppService.UploadImageAsync(content);
+
+                if (isConnections)
+                    model.NumberOfConnectionsScreenshotUrl = uploadedUrl;
+                else
+                    model.AccountCreationDateScreenshotUrl = uploadedUrl;
+            }
+            catch (Exception)
+            {
+                errorMessage = "فشل رفع الصورة. يرجى المحاولة مرة أخرى.";
+            }
+        }
+    }
+
+    private async Task HandleSubmit()
+    {
+        isSubmitting = true;
+        errorMessage = string.Empty;
+
+        var (isSuccess, message, _) = await AppService.SubmitApplicationAsync(model);
+
+        if (isSuccess)
+        {
+            isSubmittedSuccess = true;
+        }
+        else
+        {
+            errorMessage = message;
+        }
+
+        isSubmitting = false;
+    }
+
+    private void ResetForm()
+    {
+        model = new();
+        selectedMonth = "";
+        selectedYear = "";
+        isSubmittedSuccess = false;
+    }
+}
