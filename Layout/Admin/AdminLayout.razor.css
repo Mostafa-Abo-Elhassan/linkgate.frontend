@@ -1,0 +1,333 @@
+/* CSS for AdminLayout component */
+/*.admin-layout-wrapper {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    height: 100vh;
+    overflow: hidden;
+    transition: grid-template-columns 0.2s ease;
+    font-family: 'Geist', sans-serif;
+}
+
+    .admin-layout-wrapper.collapsed-sidebar {
+        grid-template-columns: 70px 1fr;
+    }
+
+.admin-sidebar {
+    background-color: #FFFFFF;
+    border-right: 1px solid #E5E7EB;
+    z-index: 10;
+    transition: width 0.2s ease;
+}
+
+.admin-main-content {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.admin-topbar {
+    height: 56px;
+    background-color: #FFFFFF;
+    border-bottom: 1px solid #E5E7EB;
+}*/
+
+/* Nav Links Styling */
+/*.nav-link {
+    color: #4B5563 !important;
+    transition: background-color 0.15s ease, color 0.15s ease;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+    .nav-link:hover {
+        background-color: #F3F6F8;
+        color: #111827 !important;
+    }
+
+    .nav-link.active {
+        background-color: rgba(0, 119, 181, 0.08) !important;
+        color: #0077B5 !important;
+        font-weight: 600;
+    }
+
+.nav-icon {
+    font-size: 16px;
+    min-width: 20px;
+    text-align: center;
+}*/
+
+
+
+/* --- CSS Variables / Design Tokens --- */
+.saas-admin-layout {
+    /* Base Typography & Dimensions */
+    --sidebar-width-expanded: 260px;
+    --sidebar-width-collapsed: 72px;
+    --topbar-height: 56px;
+    --border-radius: 6px;
+    --transition-speed: 0.2s;
+    font-family: 'Geist', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    height: 100vh;
+    display: flex;
+    overflow: hidden;
+}
+
+/* --- Theme: Light (Default SaaS Look) --- */
+.theme-light {
+    --bg-app: #F3F6F8;
+    --bg-surface: #FFFFFF;
+    --border-color: #E5E7EB;
+    --text-main: #111827;
+    --text-muted: #6B7280;
+    /* Brand Colors */
+    --brand-primary: #0077B5;
+    --nav-hover-bg: #F9FAFB;
+    --nav-hover-text: #111827;
+    --nav-active-bg: rgba(0, 119, 181, 0.08);
+    --nav-active-text: #0077B5;
+}
+
+/* --- Theme: Dark (Professional Dark Mode) --- */
+.theme-dark {
+    --bg-app: #0A0A0A;
+    --bg-surface: #171717;
+    --border-color: #262626;
+    --text-main: #EDEDED;
+    --text-muted: #A1A1AA;
+    /* Brand Colors for Dark Mode */
+    --brand-primary: #3291FF; /* Lighter blue for dark mode readability */
+    --nav-hover-bg: #262626;
+    --nav-hover-text: #FFFFFF;
+    --nav-active-bg: rgba(50, 145, 255, 0.15);
+    --nav-active-text: #3291FF;
+}
+
+/* --- Global Utilities inside Layout --- */
+.border-end {
+    border-right: 1px solid var(--border-color) !important;
+}
+
+.border-bottom {
+    border-bottom: 1px solid var(--border-color) !important;
+}
+
+.border-top {
+    border-top: 1px solid var(--border-color) !important;
+}
+
+.bg-surface {
+    background-color: var(--bg-surface) !important;
+}
+
+.text-muted {
+    color: var(--text-muted) !important;
+}
+
+/* --- Sidebar --- */
+.saas-sidebar {
+    background-color: var(--bg-surface);
+    width: var(--sidebar-width-expanded);
+    display: flex;
+    flex-direction: column;
+    transition: width var(--transition-speed) ease;
+    z-index: 10;
+}
+
+.sidebar-collapsed .saas-sidebar {
+    width: var(--sidebar-width-collapsed);
+}
+
+/* Brand Header */
+.sidebar-header {
+    height: var(--topbar-height);
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    overflow: hidden;
+}
+
+.brand-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: var(--text-main);
+}
+
+.brand-logo {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--border-radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+    flex-shrink: 0;
+    background-color: var(--brand-primary);
+}
+
+.brand-text {
+    font-size: 15px;
+    white-space: nowrap;
+}
+
+/* Sidebar Nav */
+.sidebar-nav {
+    flex-grow: 1;
+    padding: 16px 12px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 12px;
+    border-radius: var(--border-radius);
+    text-decoration: none;
+    color: var(--text-muted);
+    font-size: 14px;
+    font-weight: 500;
+    transition: background-color 0.15s, color 0.15s;
+    white-space: nowrap;
+}
+
+.nav-icon {
+    width: 30px;
+    height: 30px;
+    flex-shrink: 0;
+    margin: 8px;
+}
+
+/* Hover & Active States */
+.nav-link:hover {
+    background-color: var(--nav-hover-bg);
+    color: var(--nav-hover-text);
+}
+
+.nav-link.active {
+    background-color: var(--nav-active-bg);
+    color: var(--nav-active-text);
+    font-weight: 600;
+}
+
+/* Sidebar Toggle Footer */
+.sidebar-footer {
+    padding: 12px;
+    display: flex;
+    justify-content: center;
+}
+
+.toggle-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 8px;
+    border-radius: var(--border-radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    transition: background-color 0.15s, color 0.15s;
+}
+
+    .toggle-btn:hover {
+        background-color: var(--nav-hover-bg);
+        color: var(--nav-hover-text);
+    }
+
+/* --- Main Content Area --- */
+.saas-main-wrapper {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+/* Topbar */
+.saas-topbar {
+    height: var(--topbar-height);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+}
+
+.topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.icon-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 6px;
+    border-radius: var(--border-radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.15s, background-color 0.15s;
+}
+
+    .icon-btn:hover {
+        background-color: var(--nav-hover-bg);
+        color: var(--text-main);
+    }
+
+.user-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: var(--brand-primary);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* Dynamic Page Content */
+.saas-content-area {
+    flex-grow: 1;
+    background-color: var(--bg-app);
+    color: var(--text-main);
+    padding: 24px;
+    overflow-y: auto;
+}
+
+.content-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.nav-label {
+    font-size: 15px; /* تكبير الخط ليكون أوضح ومقروء بسهولة */
+    font-weight: 500; /* وزن الخط Medium ليعطي بروز بدون ما يكون مزعج */
+    letter-spacing: 0.3px; /* مسافة بسيطة جداً بين الحروف لزيادة الوضوح (Clarity) */
+    white-space: nowrap; /* منع الكلمة من النزول لسطر جديد لو الشاشة صغرت */
+    transition: color 0.15s ease; /* نعومة في تغير اللون عند الـ Hover */
+}
+
+/* في حالة الـ Active (لما تكون واقف في نفس الصفحة) */
+.nav-item.active .nav-label {
+    font-weight: 900; /* زيادة سماكة الخط درجة واحدة لتمييز الصفحة الحالية */
+    letter-spacing: 0.4px;
+}

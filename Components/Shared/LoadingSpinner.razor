@@ -1,0 +1,12 @@
+﻿@if (IsVisible)
+{
+    <div class="modern-spinner-overlay">
+        <div class="modern-spinner"></div>
+        <span class="spinner-text">@Message</span>
+    </div>
+}
+
+@code {
+    [Parameter] public bool IsVisible { get; set; } = false;
+    [Parameter] public string Message { get; set; } = "جاري المعالجة، يرجى الانتظار...";
+}

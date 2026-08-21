@@ -1,0 +1,92 @@
+/* CSS for NotFound component */
+/* Container: Centered Layout perfectly filling the screen minus layout header */
+.saas-not-found-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - 60px); /* Adjust depending on your navbar height */
+    background-color: #F3F6F8; /* LinkGate App Background */
+    padding: 24px;
+    font-family: 'Geist', -apple-system, sans-serif;
+}
+
+/* Premium White Card */
+.not-found-card {
+    text-align: center;
+    max-width: 460px;
+    width: 100%;
+    background-color: #FFFFFF;
+    padding: 48px 32px;
+    border-radius: 12px;
+    border: 1px solid #E5E7EB;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* Icon Styling */
+.icon-container {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 72px;
+    height: 72px;
+    background-color: #F9FAFB;
+    color: #9CA3AF; /* Muted Grey */
+    border-radius: 50%;
+    margin-bottom: 24px;
+    border: 1px solid #F3F4F6;
+}
+
+/* Typography */
+.error-code {
+    font-size: 64px;
+    font-weight: 700;
+    color: #111827;
+    margin: 0;
+    line-height: 1;
+    letter-spacing: -0.03em;
+}
+
+.error-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #374151;
+    margin: 16px 0 8px;
+    letter-spacing: -0.01em;
+}
+
+.error-desc {
+    font-size: 15px;
+    color: #6B7280;
+    line-height: 1.6;
+    margin: 0 auto 32px;
+    max-width: 360px;
+}
+
+/* Call to Action Button */
+.action-buttons {
+    display: flex;
+    justify-content: center;
+}
+
+.btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #0077B5; /* LinkGate Primary Blue */
+    color: #FFFFFF;
+    border: none;
+    padding: 10px 24px;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+    .btn-primary:hover {
+        background-color: #006097; /* Slightly darker on hover */
+    }
+
+    .btn-primary:active {
+        transform: scale(0.98); /* Instant click feedback */
+    }

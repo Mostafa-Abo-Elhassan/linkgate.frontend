@@ -1,0 +1,127 @@
+﻿@page "/admin/applications"
+@layout AdminLayout
+
+
+
+@* @page "/admin/applications"
+@inject ApplicationService AppService
+@inject NavigationManager Navigation
+
+<div class="admin-dashboard p-4" style="background-color: #F3F6F8; min-height: 100vh;">
+    <div class="container-fluid" style="max-width: 1400px;">
+
+        <!-- Header Title -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h1 class="h4 fw-bold text-dark mb-1">Applications Review</h1>
+                <p class="text-muted small mb-0">Manage incoming submissions, analyze metrics, and review user criteria.</p>
+            </div>
+        </div>
+
+        <!-- Analytics Cards Row -->
+        @if (analytics != null)
+        {
+            <div class="row g-3 mb-4">
+                <div class="col-md-4">
+                    <div class="card border border-light shadow-sm bg-white p-3 rounded-2">
+                        <span class="text-muted small fw-medium">Pending Applications</span>
+                        <h3 class="fw-bold text-dark mt-2 mb-0">@analytics.PendingApplications</h3>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card border border-light shadow-sm bg-white p-3 rounded-2">
+                        <span class="text-muted small fw-medium">Approved Applications</span>
+                        <h3 class="fw-bold text-success mt-2 mb-0">@analytics.ApprovedApplications</h3>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card border border-light shadow-sm bg-white p-3 rounded-2">
+                        <span class="text-muted small fw-medium">Rejected Applications</span>
+                        <h3 class="fw-bold text-danger mt-2 mb-0">@analytics.RejectedApplications</h3>
+                    </div>
+                </div>
+            </div>
+        }
+
+        <!-- Data Table Container -->
+        <div class="card border border-light shadow-sm bg-white rounded-3 overflow-hidden">
+            <div class="p-3 border-bottom bg-light d-flex justify-content-between align-items-center">
+                <span class="small fw-semibold text-dark">Submissions List</span>
+            </div>
+
+            @if (pagedResult == null)
+            {
+                <div class="text-center py-5">
+                    <div class="spinner-border text-primary" role="status"></div>
+                </div>
+            }
+            else if (!pagedResult.Applications.Any())
+            {
+                <div class="text-center py-5">
+                    <p class="text-muted small">Don't have applications yet.</p>
+                </div>
+            }
+            else
+            {
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0 text-dark small">
+                        <thead class="table-light text-muted fw-semibold">
+                            <tr>
+                                <th class="py-3 px-3">Applicant Name</th>
+                                <th class="py-3">Email</th>
+                                <th class="py-3">Connections</th>
+                                <th class="py-3">Status</th>
+                                <th class="py-3 text-end px-3">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var app in pagedResult.Applications)
+                            {
+                                <tr>
+                                    <td class="px-3 fw-medium">@app.FullName</td>
+                                    <td>@app.Email</td>
+                                    <td>@app.NumberOfConnections</td>
+                                    <td>
+                                        <span class="badge @GetStatusBadgeClass(app.Status)">@app.Status</span>
+                                    </td>
+                                    <td class="text-end px-3">
+                                        <button class="btn btn-sm btn-outline-primary py-0 px-2" @LinkToDetails(app.Id)>View</button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+        </div>
+
+    </div>
+</div>
+
+@code {
+    private ApplicationAnalyticsDto? analytics;
+    private ApplicationsListResponse? pagedResult;
+    private int currentPage = 1;
+    private int pageSize = 10;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadData();
+    }
+
+    private async Task LoadData()
+    {
+        analytics = await AppService.GetAnalyticsAsync();
+        pagedResult = await AppService.GetApplicationsAsync(currentPage, pageSize);
+    }
+
+    private string GetStatusBadgeClass(string status) => status switch
+    {
+        "Approved" => "bg-success text-white",
+        "Rejected" => "bg-danger text-white",
+        _ => "bg-warning text-dark"
+    };
+
+    private Microsoft.AspNetCore.Components.EventCallback LinkToDetails(Guid id) =>
+        Microsoft.AspNetCore.Components.EventCallback.Factory.Create(this, () => Navigation.NavigateTo($"/admin/applications/{id}"));
+} *@

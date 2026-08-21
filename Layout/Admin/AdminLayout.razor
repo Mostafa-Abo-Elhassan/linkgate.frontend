@@ -1,0 +1,242 @@
+﻿@* @inherits LayoutComponentBase
+@inject NavigationManager Navigation
+
+<div class="admin-layout-wrapper @(isCollapsed ? "collapsed-sidebar" : "")">
+    <!-- Sidebar -->
+    <aside class="admin-sidebar border-end bg-white d-flex flex-column">
+        <!-- Brand Header -->
+        <div class="sidebar-header px-3 py-3 d-flex align-items-center justify-content-between border-bottom">
+            <span class="brand-title fw-bold text-dark fs-6 text-truncate">
+                @if (!isCollapsed)
+                {
+                    <span>LinkGate Admin</span>
+                }
+                else
+                {
+
+                    <span>LG</span>
+                }
+            </span>
+            <button class="btn btn-sm btn-light border-0 text-muted p-1" @onclick="ToggleSidebar" title="Toggle Sidebar">
+                <span>@(isCollapsed ? "➡" : "⬅")</span>
+            </button>
+        </div>
+
+        <!-- Navigation Links -->
+        <nav class="sidebar-nav flex-grow-1 p-2">
+            <ul class="nav flex-column gap-1">
+                <li class="nav-item">
+                    <NavLink class="nav-link d-flex align-items-center gap-2 px-3 py-2 rounded-2 text-dark" href="/admin/dashboard" Match="NavLinkMatch.All">
+                        <span class="nav-icon">📊</span>
+                        @if (!isCollapsed)
+                        {
+                            <span class="nav-text small fw-medium">Dashboard</span>
+                        }
+                    </NavLink>
+                </li>
+
+                <!-- Applications Dropdown / Parent -->
+                <li class="nav-item">
+                    <div class="nav-link-parent">
+                        <NavLink class="nav-link d-flex align-items-center justify-content-between px-3 py-2 rounded-2 text-dark" href="/admin/applications" Match="NavLinkMatch.Prefix">
+                            <div class="d-flex align-items-center gap-2">
+                                <span class="nav-icon">📁</span>
+                                @if (!isCollapsed)
+                                {
+                                    <span class="nav-text small fw-medium">Applications</span>
+                                }
+                            </div>
+                        </NavLink>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Sidebar Footer / User Info -->
+        <div class="sidebar-footer p-3 border-top bg-light">
+            <div class="d-flex align-items-center gap-2">
+                <div class="avatar bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; font-size: 12px;">
+                    MM
+                </div>
+                @if (!isCollapsed)
+                {
+                    <div class="overflow-hidden">
+                        <h6 class="mb-0 text-dark small fw-bold text-truncate">Mostafa Mahmoud</h6>
+                        <span class="text-muted d-block" style="font-size: 11px;">Admin</span>
+                    </div>
+                }
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="admin-main-content d-flex flex-column">
+        <!-- Top Header Navigation -->
+        <header class="admin-topbar bg-white border-bottom px-4 py-2 d-flex align-items-center justify-content-between">
+            <div class="d-flex align-items-center gap-2">
+                <span class="text-muted small">Workspace / Admin Portal</span>
+            </div>
+            <div class="d-flex align-items-center gap-3">
+                <span class="badge bg-light text-dark border px-2 py-1 small">v1.0.0</span>
+            </div>
+        </header>
+
+        <!-- Dynamic Body Content -->
+        <main class="flex-grow-1 p-4" style="background-color: #F3F6F8; overflow-y: auto;">
+            @Body
+        </main>
+    </div>
+</div>
+
+@code {
+    private bool isCollapsed = false;
+
+    private void ToggleSidebar()
+    {
+        isCollapsed = !isCollapsed;
+    }
+} *@
+
+
+@inherits LayoutComponentBase
+@inject NavigationManager Navigation
+
+<div class="saas-admin-layout @(isDarkMode ? "theme-dark" : "theme-light") @(isCollapsed ? "sidebar-collapsed" : "sidebar-expanded")">
+
+    <!-- Sidebar -->
+    <aside class="saas-sidebar border-end">
+        <!-- Sidebar Header (Brand) -->
+        <div class="sidebar-header border-bottom">
+            <a href="/admin/dashboard" class="brand-link">
+                <div class="brand-logo bg-primary text-white">LG</div>
+                @if (!isCollapsed)
+                {
+                    <span class="brand-text fw-bold">LinkGate Admin</span>
+                }
+            </a>
+        </div>
+
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar-nav">
+            <ul class="nav-list">
+                <li class="nav-item">
+                    <NavLink class="nav-link" href="/admin/dashboard" Match="NavLinkMatch.All">
+                        <!-- Dashboard Premium Icon -->
+                        <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="3" width="7" height="9"></rect>
+                            <rect x="14" y="3" width="7" height="5"></rect>
+                            <rect x="14" y="12" width="7" height="9"></rect>
+                            <rect x="3" y="16" width="7" height="5"></rect>
+                        </svg>
+                        @if (!isCollapsed)
+                        {
+                            <span class="nav-label">Dashboard</span>
+                        }
+                    </NavLink>
+                </li>
+
+                <li class="nav-item">
+                    <NavLink class="nav-link" href="/admin/applications" Match="NavLinkMatch.Prefix">
+                        <!-- Applications Premium Icon -->
+                        <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <line x1="16" y1="13" x2="8" y2="13"></line>
+                            <line x1="16" y1="17" x2="8" y2="17"></line>
+                            <polyline points="10 9 9 9 8 9"></polyline>
+                        </svg>
+                        @if (!isCollapsed)
+                        {
+                            <span class="nav-label">Applications</span>
+                        }
+                    </NavLink>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Sidebar Toggle Button (Bottom) -->
+        <div class="sidebar-footer border-top">
+            <button class="toggle-btn" @onclick="ToggleSidebar" title="Toggle Sidebar">
+                <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    @if (isCollapsed)
+                    {
+                        <polyline points="13 17 18 12 13 7"></polyline>
+                        <polyline points="6 17 11 12 6 7"></polyline>
+                    }
+                    else
+                    {
+                        <polyline points="11 17 6 12 11 7"></polyline>
+                        <polyline points="18 17 13 12 18 7"></polyline>
+                    }
+                </svg>
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content Wrapper -->
+    <div class="saas-main-wrapper">
+
+        <!-- Topbar / Header -->
+        <header class="saas-topbar border-bottom bg-surface">
+            <div class="topbar-left">
+                <!-- Can add Breadcrumbs or Page Title here in the future -->
+                <span class="text-muted small fw-medium">Workspace</span>
+            </div>
+
+            <div class="topbar-right">
+                <!-- Dark Mode Toggle -->
+                <button class="icon-btn" @onclick="ToggleDarkMode" title="Toggle Theme">
+                    @if (isDarkMode)
+                    {
+                        <!-- Sun Icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="5"></circle>
+                            <line x1="12" y1="1" x2="12" y2="3"></line>
+                            <line x1="12" y1="21" x2="12" y2="23"></line>
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                            <line x1="1" y1="12" x2="3" y2="12"></line>
+                            <line x1="21" y1="12" x2="23" y2="12"></line>
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                        </svg>
+                    }
+                    else
+                    {
+                        <!-- Moon Icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                        </svg>
+                    }
+                </button>
+
+                <!-- User Avatar -->
+                <div class="user-avatar">
+                    MM
+                </div>
+            </div>
+        </header>
+
+        <!-- Dynamic Page Content -->
+        <main class="saas-content-area">
+            <div class="content-container">
+                @Body
+            </div>
+        </main>
+    </div>
+</div>
+
+@code {
+    private bool isCollapsed = false;
+    private bool isDarkMode = false;
+
+    private void ToggleSidebar()
+    {
+        isCollapsed = !isCollapsed;
+    }
+
+    private void ToggleDarkMode()
+    {
+        isDarkMode = !isDarkMode;
+    }
+}

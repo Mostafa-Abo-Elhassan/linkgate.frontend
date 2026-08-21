@@ -104,6 +104,9 @@
                             <ValidationMessage For="@(() => model.LinkedInAccountCreationDate)" class="text-danger small" />
                         </div>
 
+                        <!-- 1. استدعاء مكون اللودينغ وربطه بمتغير رفع الصورة -->
+<LoadingSpinner IsVisible="isUploadingImage" Message="جاري رفع الصورة ومعالجتها على السيرفر..." />
+
                         <!-- Connections Screenshot Upload -->
                         <div class="col-md-6">
                             <div class="d-flex justify-content-between align-items-center">
@@ -208,6 +211,10 @@
         }
     }
 
+
+    // متغير خاص بالتحكم في ظهور لودينغ رفع الصورة
+    private bool isUploadingImage = false;
+
     private async Task UploadScreenshot(InputFileChangeEventArgs e, bool isConnections)
     {
         var file = e.File;
@@ -215,13 +222,17 @@
         {
             try
             {
+                // 1. تفعيل اللودينغ وإجبار واجهة المستخدم على التحديث فوراً
+                isUploadingImage = true;
+                StateHasChanged(); // <--- الأقواس هنا هي السر كله!
+
                 errorMessage = string.Empty;
 
                 long maxAllowedSize = 2 * 1024 * 1024; // 2 MB
                 if (file.Size > maxAllowedSize)
                 {
                     errorMessage = "حجم الصورة يتجاوز الحد الأقصى المسموح به (2 ميجابايت).";
-                    return;
+                    return; // هيروح للـ finally مباشرة ويطفي اللودينغ
                 }
 
                 var format = file.ContentType;
@@ -250,8 +261,17 @@
             {
                 errorMessage = "فشل رفع الصورة. يرجى المحاولة مرة أخرى.";
             }
+            finally
+            {
+                // 3. إطفاء اللودينغ وإجبار الشاشة على التحديث ليختفي فوراً
+                isUploadingImage = false;
+                StateHasChanged(); // <--- مهم جداً هنا برضه عشان يطفي اللودينغ
+            }
         }
     }
+
+
+
 
     private async Task HandleSubmit()
     {
