@@ -1,127 +1,295 @@
 ﻿@page "/admin/applications"
 @layout AdminLayout
 
-
-
-@* @page "/admin/applications"
+@using LinkGate.frontend.Models.Applications.Responses
+@using LinkGate.frontend.Services.Applications
 @inject ApplicationService AppService
 @inject NavigationManager Navigation
+@inject IJSRuntime JS
 
-<div class="admin-dashboard p-4" style="background-color: #F3F6F8; min-height: 100vh;">
-    <div class="container-fluid" style="max-width: 1400px;">
+<div class="saas-page-container">
 
-        <!-- Header Title -->
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <div>
-                <h1 class="h4 fw-bold text-dark mb-1">Applications Review</h1>
-                <p class="text-muted small mb-0">Manage incoming submissions, analyze metrics, and review user criteria.</p>
+    <!-- Page Header -->
+    <div class="page-header mb-4">
+        <h2 class="page-title">Applications</h2>
+        <p class="page-subtitle">Review and manage user onboarding applications.</p>
+    </div>
+
+    <!-- 1. Statistics Cards -->
+    @if (analytics != null)
+    {
+        <div class="stats-grid mb-4">
+            <div class="stat-card">
+                <span class="stat-label">Pending</span>
+                <span class="stat-value text-warning">@analytics.PendingApplications</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-label">Approved</span>
+                <span class="stat-value text-success">@analytics.ApprovedApplications</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-label">Rejected</span>
+                <span class="stat-value text-danger">@analytics.RejectedApplications</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-label">Total Accounts</span>
+                <span class="stat-value">@analytics.TotalAccounts</span>
+            </div>
+        </div>
+    }
+
+    <!-- Main Table Container -->
+    <div class="table-card">
+
+        <!-- 2. Filters & Controls -->
+        <div class="table-toolbar border-bottom">
+            <div class="toolbar-left">
+                <select class="saas-select" @bind="currentStatus" @bind:event="onchange">
+                    <option value="">All Statuses</option>
+                    <option value="Pending">Pending</option>
+                    <option value="Approved">Approved</option>
+                    <option value="Rejected">Rejected</option>
+                </select>
+            </div>
+            <div class="toolbar-right">
+                <span class="text-muted small d-none d-sm-inline">Rows per page:</span>
+                <select class="saas-select" @onchange="OnPageSizeChanged">
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="30">30</option>
+                    <option value="40">40</option>
+                    <option value="50">50</option>
+                </select>
             </div>
         </div>
 
-        <!-- Analytics Cards Row -->
-        @if (analytics != null)
+        <!-- 3. Data Table -->
+        <div class="table-responsive">
+            <table class="saas-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Phone Number</th>
+                        <th>Email</th>
+                        <th>LinkedIn Profile</th>
+                        <th>Connections</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th class="text-end">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (isLoading)
+                    {
+                        <tr>
+                            <td colspan="8" class="text-center py-5">
+                                <div class="spinner"></div>
+                            </td>
+                        </tr>
+                    }
+                    else if (!FilteredApplications.Any())
+                    {
+                        <tr>
+                            <td colspan="8" class="text-center py-5">
+                                <div class="empty-state">
+                                    <svg class="empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                        <polyline points="14 2 14 8 20 8"></polyline>
+                                        <line x1="9" y1="15" x2="15" y2="15"></line>
+                                    </svg>
+                                    <h4 class="empty-title">No applications found</h4>
+                                    <p class="empty-desc">There are currently no applications matching your criteria.</p>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        @foreach (var app in FilteredApplications)
+                        {
+                            <tr>
+                                <td class="fw-medium text-dark">@app.FullName</td>
+
+                                <!-- Phone with Actions -->
+                                <td>
+                                    <div class="quick-action-cell">
+                                        <span>@app.PhoneNumber</span>
+                                        <div class="action-icons">
+                                            <a href="https://wa.me/@FormatWhatsAppNumber(app.PhoneNumber)" target="_blank" class="mini-icon wa-icon" title="WhatsApp">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                                            </a>
+                                            <button @onclick="() => CopyToClipboard(app.PhoneNumber)" class="mini-icon copy-icon" title="Copy">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </td>
+
+                                <!-- Email with Actions -->
+                                <td>
+                                    <div class="quick-action-cell">
+                                        @* <span class="text-truncate" style="max-width: 250px;">@app.Email</span> *@
+                                        <span class="text-truncate" style="max-width: 250px;">@app.Email</span>
+                                        <div class="action-icons">
+                                            <a href="mailto:@app.Email" class="mini-icon email-icon" title="Send Email">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                                            </a>
+                                            <button @onclick="() => CopyToClipboard(app.Email)" class="mini-icon copy-icon" title="Copy">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </td>
+
+                                <td><a href="@app.LinkedInProfileUrl" target="_blank" class="linkedin-link">Profile ↗</a></td>
+                                <td>@app.NumberOfConnections</td>
+                                <td>@app.LinkedInAccountCreationDate.ToString("MMM dd, yyyy")</td>
+                                <td><span class="status-badge @GetStatusClass(app.Status)">@app.Status</span></td>
+                                <td class="text-end">
+                                    <button class="btn-view" @onclick="() => NavigateToDetails(app.Id)">View</button>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+
+        </div>
+
+        <!-- 4. Pagination -->
+        @if (pagedData != null && pagedData.TotalPages > 0)
         {
-            <div class="row g-3 mb-4">
-                <div class="col-md-4">
-                    <div class="card border border-light shadow-sm bg-white p-3 rounded-2">
-                        <span class="text-muted small fw-medium">Pending Applications</span>
-                        <h3 class="fw-bold text-dark mt-2 mb-0">@analytics.PendingApplications</h3>
+            <div class="table-pagination border-top">
+                <span class="pagination-info">
+                    Page @pagedData.Page of @pagedData.TotalPages
+                    <span class="text-muted ms-1 d-none d-sm-inline">(Total: @pagedData.TotalCount)</span>
+                </span>
+
+                <div class="pagination-controls">
+                    <button class="page-btn" disabled="@(currentPage == 1)" @onclick="() => ChangePage(currentPage - 1)">Prev</button>
+
+                    @* للحفاظ على الشكل الجمالي في الموبايل، نعرض فقط أرقام الصفحات إذا كانت الشاشة كبيرة *@
+                    <div class="d-none d-sm-flex gap-1">
+                        @for (int i = 1; i <= pagedData.TotalPages; i++)
+                        {
+                            var pageNumber = i;
+                            <button class="page-btn @(currentPage == pageNumber ? "active" : "")" @onclick="() => ChangePage(pageNumber)">
+                                @pageNumber
+                            </button>
+                        }
                     </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card border border-light shadow-sm bg-white p-3 rounded-2">
-                        <span class="text-muted small fw-medium">Approved Applications</span>
-                        <h3 class="fw-bold text-success mt-2 mb-0">@analytics.ApprovedApplications</h3>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card border border-light shadow-sm bg-white p-3 rounded-2">
-                        <span class="text-muted small fw-medium">Rejected Applications</span>
-                        <h3 class="fw-bold text-danger mt-2 mb-0">@analytics.RejectedApplications</h3>
-                    </div>
+
+                    <button class="page-btn" disabled="@(currentPage == pagedData.TotalPages)" @onclick="() => ChangePage(currentPage + 1)">Next</button>
                 </div>
             </div>
         }
-
-        <!-- Data Table Container -->
-        <div class="card border border-light shadow-sm bg-white rounded-3 overflow-hidden">
-            <div class="p-3 border-bottom bg-light d-flex justify-content-between align-items-center">
-                <span class="small fw-semibold text-dark">Submissions List</span>
-            </div>
-
-            @if (pagedResult == null)
-            {
-                <div class="text-center py-5">
-                    <div class="spinner-border text-primary" role="status"></div>
-                </div>
-            }
-            else if (!pagedResult.Applications.Any())
-            {
-                <div class="text-center py-5">
-                    <p class="text-muted small">Don't have applications yet.</p>
-                </div>
-            }
-            else
-            {
-                <div class="table-responsive">
-                    <table class="table table-hover align-middle mb-0 text-dark small">
-                        <thead class="table-light text-muted fw-semibold">
-                            <tr>
-                                <th class="py-3 px-3">Applicant Name</th>
-                                <th class="py-3">Email</th>
-                                <th class="py-3">Connections</th>
-                                <th class="py-3">Status</th>
-                                <th class="py-3 text-end px-3">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var app in pagedResult.Applications)
-                            {
-                                <tr>
-                                    <td class="px-3 fw-medium">@app.FullName</td>
-                                    <td>@app.Email</td>
-                                    <td>@app.NumberOfConnections</td>
-                                    <td>
-                                        <span class="badge @GetStatusBadgeClass(app.Status)">@app.Status</span>
-                                    </td>
-                                    <td class="text-end px-3">
-                                        <button class="btn btn-sm btn-outline-primary py-0 px-2" @LinkToDetails(app.Id)>View</button>
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>
-            }
-        </div>
-
     </div>
-</div>
+
+    <!-- Toast Notification (يظهر فقط عند النسخ) -->
+    @if (showToast)
+    {
+        <div class="saas-toast">
+            <svg class="toast-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            <span>@toastMessage</span>
+        </div>
+    }
+</div> <!-- نهاية ديف saas-page-container -->
+
+
 
 @code {
-    private ApplicationAnalyticsDto? analytics;
-    private ApplicationsListResponse? pagedResult;
+    private ApplicationsAnalyticsResponse? analytics;
+    private ViewApplicationsResponse? pagedData;
+    private bool isLoading = true;
+
     private int currentPage = 1;
     private int pageSize = 10;
+    private string currentStatus = "";
+
+    // --- متغيرات الـ Toast ---
+    private bool showToast = false;
+    private string toastMessage = "";
+
+    // فلترة محلية (Frontend Filtering) للبيانات المحملة في الصفحة الحالية
+    private IEnumerable<ApplicationListItemResponse> FilteredApplications =>
+        pagedData?.Applications.Where(a => string.IsNullOrEmpty(currentStatus) || a.Status == currentStatus) ?? Array.Empty<ApplicationListItemResponse>();
 
     protected override async Task OnInitializedAsync()
     {
-        await LoadData();
+        await LoadAnalytics();
+        await LoadTableData();
     }
 
-    private async Task LoadData()
+    private async Task LoadAnalytics()
     {
         analytics = await AppService.GetAnalyticsAsync();
-        pagedResult = await AppService.GetApplicationsAsync(currentPage, pageSize);
     }
 
-    private string GetStatusBadgeClass(string status) => status switch
+    private async Task LoadTableData()
     {
-        "Approved" => "bg-success text-white",
-        "Rejected" => "bg-danger text-white",
-        _ => "bg-warning text-dark"
-    };
+        isLoading = true;
+        pagedData = await AppService.GetApplicationsAsync(currentPage, pageSize);
+        isLoading = false;
+    }
 
-    private Microsoft.AspNetCore.Components.EventCallback LinkToDetails(Guid id) =>
-        Microsoft.AspNetCore.Components.EventCallback.Factory.Create(this, () => Navigation.NavigateTo($"/admin/applications/{id}"));
-} *@
+    private async Task OnPageSizeChanged(ChangeEventArgs e)
+    {
+        if (int.TryParse(e.Value?.ToString(), out int newSize))
+        {
+            pageSize = newSize;
+            currentPage = 1;
+            currentStatus = ""; // تفريغ الفلتر عند تغيير الحجم
+            await LoadTableData();
+        }
+    }
+
+    private async Task ChangePage(int newPage)
+    {
+        if (newPage >= 1 && newPage <= (pagedData?.TotalPages ?? 1) && newPage != currentPage)
+        {
+            currentPage = newPage;
+            await LoadTableData();
+        }
+    }
+
+    private void NavigateToDetails(Guid id)
+    {
+        Navigation.NavigateTo($"/admin/applications/{id}");
+    }
+
+    private string FormatWhatsAppNumber(string number)
+    {
+        return number.Replace("+", "").Replace(" ", "").Trim();
+    }
+
+
+
+   // --- تعديل دالة النسخ ---
+    private async Task CopyToClipboard(string text)
+    {
+        // 1. نسخ النص للحافظة
+        await JS.InvokeVoidAsync("navigator.clipboard.writeText", text);
+        
+        // 2. إظهار الرسالة
+        toastMessage = "Copied to clipboard";
+        showToast = true;
+        StateHasChanged(); // تحديث الواجهة لإظهار الرسالة
+
+        // 3. الانتظار لمدة ثانيتين (2000 ملي ثانية)
+        await Task.Delay(2000);
+
+        // 4. إخفاء الرسالة
+        showToast = false;
+        StateHasChanged(); // تحديث الواجهة لإخفاء الرسالة
+    }
+
+    private string GetStatusClass(string status) => status switch
+    {
+        "Pending" => "badge-warning",
+        "Approved" => "badge-success",
+        "Rejected" => "badge-danger",
+        _ => "badge-default"
+    };
+}

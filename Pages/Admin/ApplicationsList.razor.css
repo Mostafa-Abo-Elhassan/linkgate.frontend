@@ -1,0 +1,421 @@
+/* --- Global Container --- */
+.saas-page-container {
+    padding: 8px 0;
+    font-family: 'Geist', -apple-system, sans-serif;
+}
+
+.page-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: #111827;
+    margin: 0 0 4px 0;
+    letter-spacing: -0.01em;
+}
+
+.page-subtitle {
+    font-size: 14px;
+    color: #6B7280;
+    margin: 0;
+}
+
+/* --- Stats Cards (Single Row - Swipeable on Mobile) --- */
+.stats-grid {
+    display: flex;
+    flex-wrap: nowrap; /* إجبار الكروت إنها تفضل في صف واحد وماتنزلش سطر جديد */
+    gap: 16px;
+    overflow-x: auto; /* تفعيل السحب الجانبي (Swipe) في الشاشات الصغيرة */
+    -webkit-overflow-scrolling: touch; /* سحب ناعم وسلس جداً في الموبايل (iOS) */
+    padding-bottom: 8px; /* مسافة بسيطة من تحت عشان لو الـ Scrollbar ظهر مياكلش من الكارت */
+    scrollbar-width: none; /* إخفاء الـ Scrollbar في Firefox لشكل أنظف */
+}
+
+    /* إخفاء الـ Scrollbar في Chrome و Safari و Edge */
+    .stats-grid::-webkit-scrollbar {
+        display: none;
+    }
+
+.stat-card {
+    background: #FFFFFF;
+    border: 1px solid #EAEAEA;
+    border-radius: 8px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+    /* توزيع المساحات */
+    flex: 1 1 0; /* في الشاشات الكبيرة: الكروت كلها هتتوزع وتاخد مساحات متساوية 100% */
+    min-width: 140px; /* في الموبايل: ده هيمنع الكارت إنه يصغر عن 140 بيكسل عشان الكلام يفضل واضح، وهيسمحلك تسحبهم يمين وشمال */
+}
+
+.stat-label {
+    font-size: 13px;
+    font-weight: 500;
+    color: #64748B;
+}
+
+.stat-value {
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1;
+    color: #111827;
+}
+
+.text-warning {
+    color: #D97706;
+}
+
+.text-success {
+    color: #059669;
+}
+
+.text-danger {
+    color: #DC2626;
+}
+
+/* --- Table Container --- */
+.table-card {
+    background: #FFFFFF;
+    border: 1px solid #EAEAEA;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    overflow: hidden;
+}
+
+/* Toolbar */
+.table-toolbar {
+    padding: 12px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #FAFAFA;
+    gap: 12px;
+}
+
+.toolbar-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.saas-select {
+    padding: 6px 12px;
+    font-size: 13px;
+    color: #374151;
+    border: 1px solid #D1D5DB;
+    border-radius: 6px;
+    background-color: #FFFFFF;
+    outline: none;
+    cursor: pointer;
+    transition: border-color 0.15s;
+}
+
+    .saas-select:focus {
+        border-color: #0077B5;
+        box-shadow: 0 0 0 2px rgba(0,119,181,0.1);
+    }
+
+/* Table Design */
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch; /* لتحسين السحب في الموبايل */
+}
+
+.saas-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    text-align: left;
+    min-width: 800px; /* ضمان عدم تداخل الأعمدة في الموبايل */
+}
+
+    .saas-table th {
+        font-weight: 500;
+        color: #6B7280;
+        padding: 12px 16px;
+        border-bottom: 1px solid #EAEAEA;
+        background: #FFFFFF;
+        white-space: nowrap;
+    }
+
+    .saas-table td {
+        padding: 14px 16px;
+        color: #374151;
+        border-bottom: 1px solid #F3F4F6;
+        vertical-align: middle;
+    }
+
+    .saas-table tr:hover td {
+        background-color: #F9FAFB;
+    }
+
+/* --- Quick Actions (WhatsApp & Email & Copy) --- */
+.quick-action-cell {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.action-icons {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    opacity: 0; /* مخفية في الوضع الطبيعي */
+    transition: opacity 0.2s ease;
+}
+
+/* إظهار الأيقونات عند تمرير الماوس على الصف */
+.saas-table tr:hover .action-icons {
+    opacity: 1;
+}
+
+/* إظهار الأيقونات دائماً في الشاشات الصغيرة (لأن مفيش Hover) */
+@media (max-width: 1024px) {
+    .action-icons {
+        opacity: 1;
+    }
+}
+
+.mini-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+    background: transparent;
+    border: none;
+    color: #9CA3AF; /* Muted Color */
+    cursor: pointer;
+    transition: all 0.15s;
+    text-decoration: none;
+}
+
+    .mini-icon svg {
+        width: 14px;
+        height: 14px;
+    }
+
+/* Hover Colors for specific actions */
+.wa-icon:hover {
+    color: #10B981;
+    background: #D1FAE5;
+}
+/* WhatsApp Green */
+.email-icon:hover {
+    color: #3B82F6;
+    background: #DBEAFE;
+}
+/* Email Blue */
+.copy-icon:hover {
+    color: #6B7280;
+    background: #F3F4F6;
+}
+/* General Gray */
+
+/* Badges & Links */
+.fw-medium {
+    font-weight: 500;
+}
+
+.text-dark {
+    color: #111827;
+}
+
+.linkedin-link {
+    color: #0077B5;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+    .linkedin-link:hover {
+        text-decoration: underline;
+    }
+
+.status-badge {
+    padding: 4px 10px;
+    border-radius: 9999px;
+    font-size: 12px;
+    font-weight: 500;
+    display: inline-flex;
+}
+
+.badge-warning {
+    background: #FEF3C7;
+    color: #D97706;
+}
+
+.badge-success {
+    background: #D1FAE5;
+    color: #059669;
+}
+
+.badge-danger {
+    background: #FEE2E2;
+    color: #DC2626;
+}
+
+.badge-default {
+    background: #F3F4F6;
+    color: #4B5563;
+}
+
+/* View Button */
+.btn-view {
+    background: transparent;
+    border: 1px solid #E5E7EB;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    color: #374151;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+    .btn-view:hover {
+        background: #F9FAFB;
+        border-color: #D1D5DB;
+        color: #111827;
+    }
+
+/* --- Pagination --- */
+.table-pagination {
+    padding: 12px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #FFFFFF;
+    font-size: 13px;
+}
+
+.pagination-controls {
+    display: flex;
+    gap: 4px;
+}
+
+.page-btn {
+    background: #FFFFFF;
+    border: 1px solid #E5E7EB;
+    padding: 4px 10px;
+    min-width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    color: #374151;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.1s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+    .page-btn:hover:not(:disabled) {
+        background: #F9FAFB;
+    }
+
+    .page-btn.active {
+        background: #0077B5;
+        color: #FFFFFF;
+        border-color: #0077B5;
+    }
+
+    .page-btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+/* --- Empty State --- */
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 24px 0;
+}
+
+.empty-icon {
+    width: 48px;
+    height: 48px;
+    color: #9CA3AF;
+    margin-bottom: 16px;
+}
+
+.empty-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0 0 4px 0;
+}
+
+.empty-desc {
+    color: #6B7280;
+    margin: 0;
+}
+
+.spinner {
+    width: 24px;
+    height: 24px;
+    border: 2px solid #E5E7EB;
+    border-top-color: #0077B5;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: 0 auto;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* --- Mobile Specific Adjustments --- */
+@media (max-width: 640px) {
+    .table-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .table-pagination {
+        flex-direction: column;
+        gap: 12px;
+    }
+}
+
+/* --- Toast Notification --- */
+.saas-toast {
+    position: fixed;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #111827; /* لون داكن فخم جداً */
+    color: #FFFFFF;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    z-index: 9999;
+    /* الأنيميشن اللي بيديها إحساس النعومة والسرعة */
+    animation: slideUpFade 0.25s cubic-bezier(0.2, 0, 0, 1) forwards;
+}
+
+.toast-icon {
+    width: 16px;
+    height: 16px;
+    color: #10B981; /* لون أخضر دلالة على النجاح */
+}
+
+@keyframes slideUpFade {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, 16px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
+}

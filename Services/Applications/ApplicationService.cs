@@ -1,4 +1,5 @@
 ﻿using LinkGate.frontend.Models.Applications.Requests;
+using LinkGate.frontend.Models.Applications.Responses;
 using LinkGate.Web.Models.Applications.Responses;
 using System.Net.Http.Json;
 
@@ -13,6 +14,7 @@ namespace LinkGate.frontend.Services.Applications
             _http = http;
         }
 
+        // This method submits an application to the backend API and returns a tuple indicating success, a message, and the response data if successful.
         public async Task<(bool IsSuccess, string Message, ApplicationSubmitResponse? Data)> SubmitApplicationAsync(ApplicationSubmitRequest request)
         {
             try
@@ -39,6 +41,9 @@ namespace LinkGate.frontend.Services.Applications
             }
         }
 
+
+
+        //UploadImageAsync
         public async Task<string> UploadImageAsync(MultipartFormDataContent content)
         {
             var response = await _http.PostAsync("api/v1/public/images/upload", content);
@@ -51,5 +56,51 @@ namespace LinkGate.frontend.Services.Applications
 
             throw new Exception("فشل رفع الصورة إلى السيرفر.");
         }
+
+
+
+        // This method retrieves a paginated list of applications from the backend API, optionally filtered by status.
+        public async Task<ViewApplicationsResponse?> GetApplicationsAsync(int page = 1, int pageSize = 10)
+        {
+            var query = $"api/v1/admin/applications?Page={page}&PageSize={pageSize}";
+            return await _http.GetFromJsonAsync<ViewApplicationsResponse>(query);
+        }
+
+
+
+        // This method retrieves analytics data about applications from the backend API.
+        public async Task<ApplicationsAnalyticsResponse?> GetAnalyticsAsync()
+        {
+            return await _http.GetFromJsonAsync<ApplicationsAnalyticsResponse>("api/v1/admin/applications/analytics");
+        }
+
+
+        // This method retrieves detailed information about a specific application by its ID from the backend API.
+        public async Task<ApplicationDetailsResponse?> GetApplicationDetailsAsync(Guid id)
+        {
+            return await _http.GetFromJsonAsync<ApplicationDetailsResponse>($"/api/v1/admin/applications/{id}");
+        }
+
+        public async Task<ApproveApplicationResponse?> ApproveApplicationAsync(Guid id)
+        {
+            var response = await _http.PutAsync($"/api/v1/admin/applications/{id}/approve", null);
+            if (response.IsSuccessStatusCode)
+            {
+                return await response.Content.ReadFromJsonAsync<ApproveApplicationResponse>();
+            }
+            return null;
+        }
+
+        public async Task<RejectApplicationResponse?> RejectApplicationAsync(Guid id, string? reason)
+        {
+            var request = new RejectApplicationRequest { Reason = reason };
+            var response = await _http.PutAsJsonAsync($"/api/v1/admin/applications/{id}/reject", request);
+            if (response.IsSuccessStatusCode)
+            {
+                return await response.Content.ReadFromJsonAsync<RejectApplicationResponse>();
+            }
+            return null;
+        }
+
     }
 }
