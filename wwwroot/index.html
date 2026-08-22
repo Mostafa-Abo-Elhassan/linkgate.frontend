@@ -20,13 +20,34 @@
 </head>
 
 <body>
-    <div id="app">
-        <!--<svg class="loading-progress">
+    <!--<div id="app">
+        <svg class="loading-progress">
             <circle r="40%" cx="50%" cy="50%" />
             <circle r="40%" cx="50%" cy="50%" />
-        </svg>-->
-        <!--<div class="loading-progress-text"></div>-->
+        </svg>
+        <div class="loading-progress-text"></div>
 
+    </div>-->
+
+    <div id="app">
+        <div style="position: fixed; inset: 0; background: rgba(0, 0, 0, 0.35); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; z-index: 999999;">
+            <div style="background: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 12px; padding: 32px; width: 340px; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 10%), 0 10px 10px -5px rgba(0, 0, 0, 4%); display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: system-ui, -apple-system, sans-serif;">
+                <div style="width: 40px; height: 40px; border: 3px solid #E5E7EB; border-top: 3px solid #0077B5; border-radius: 50%; animation: spin 0.8s linear infinite;"></div>
+                <span style="margin-top: 14px; color: #111827; font-size: 14px; font-weight: 500; letter-spacing: 0.3px;">جاري المعالجة، يرجى الانتظار...</span>
+            </div>
+        </div>
+
+        <style>
+            @keyframes spin {
+                0% {
+                    transform: rotate(0deg);
+                }
+
+                100% {
+                    transform: rotate(360deg);
+                }
+            }
+        </style>
     </div>
 
     <!--<div id="blazor-error-ui">

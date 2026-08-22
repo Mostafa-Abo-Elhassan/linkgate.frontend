@@ -44,14 +44,14 @@
 
                         <!-- Phone Number -->
                         <div class="col-md-6">
-                            <label class="form-label small fw-medium text-dark">رقم الهاتف (واتساب)</label>
+                            <label class="form-label small fw-medium text-dark">رقم الهاتف (واتساب) </label>
                             <InputText class="form-control form-control-sm" @bind-Value="model.PhoneNumber" placeholder="مثال: 01012345678" />
                             <ValidationMessage For="@(() => model.PhoneNumber)" class="text-danger small" />
                         </div>
 
                         <!-- Email -->
                         <div class="col-md-6">
-                            <label class="form-label small fw-medium text-dark">البريد الإلكتروني</label>
+                            <label class="form-label small fw-medium text-dark">البريد الإلكتروني(ايميل لينكد ان)</label>
                             <InputText class="form-control form-control-sm" @bind-Value="model.Email" placeholder="مثال: name@example.com" />
                             <ValidationMessage For="@(() => model.Email)" class="text-danger small" />
                         </div>
@@ -70,7 +70,7 @@
                             <ValidationMessage For="@(() => model.NumberOfConnections)" class="text-danger small" />
                         </div>
 
-                        <!-- Account Creation Date (Improved UI: Month & Year Selectors mapped to DateOnly) -->
+                        <!-- Account Creation Date -->
                         <div class="col-md-6">
                             <label class="form-label small fw-medium text-dark">تاريخ إنشاء الحساب (الشهر والسنة)</label>
                             <div class="row g-2">
@@ -104,9 +104,6 @@
                             <ValidationMessage For="@(() => model.LinkedInAccountCreationDate)" class="text-danger small" />
                         </div>
 
-                        <!-- 1. استدعاء مكون اللودينغ وربطه بمتغير رفع الصورة -->
-<LoadingSpinner IsVisible="isUploadingImage" Message="جاري رفع الصورة ومعالجتها على السيرفر..." />
-
                         <!-- Connections Screenshot Upload -->
                         <div class="col-md-6">
                             <div class="d-flex justify-content-between align-items-center">
@@ -115,6 +112,15 @@
                             </div>
                             <InputFile class="form-control form-control-sm" OnChange="@(e => UploadScreenshot(e, true))" />
                             <span class="text-muted d-block mt-1" style="font-size: 10px;">أقصى حجم: 2 ميجابايت (جميع الصيغ مقبولة)</span>
+
+                            @if (isUploadingImage && isUploadingConnections)
+                            {
+                                <div class="inline-upload-loader">
+                                    <div class="inline-spinner"></div>
+                                    <span>جاري رفع ومعالجة الصورة...</span>
+                                </div>
+                            }
+
                             <ValidationMessage For="@(() => model.NumberOfConnectionsScreenshotUrl)" class="text-danger small" />
                             @if (!string.IsNullOrEmpty(model.NumberOfConnectionsScreenshotUrl))
                             {
@@ -130,6 +136,15 @@
                             </div>
                             <InputFile class="form-control form-control-sm" OnChange="@(e => UploadScreenshot(e, false))" />
                             <span class="text-muted d-block mt-1" style="font-size: 10px;">أقصى حجم: 2 ميجابايت (جميع الصيغ مقبولة)</span>
+
+                            @if (isUploadingImage && !isUploadingConnections)
+                            {
+                                <div class="inline-upload-loader">
+                                    <div class="inline-spinner"></div>
+                                    <span>جاري رفع ومعالجة الصورة...</span>
+                                </div>
+                            }
+
                             <ValidationMessage For="@(() => model.AccountCreationDateScreenshotUrl)" class="text-danger small" />
                             @if (!string.IsNullOrEmpty(model.AccountCreationDateScreenshotUrl))
                             {
@@ -175,6 +190,49 @@
     </div>
 </section>
 
+
+// Inline CSS for the upload loader and spinner
+<style>
+    .inline-upload-loader {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 6px;
+        padding: 4px 8px;
+        background: #F9FAFB;
+        border: 1px solid #E5E7EB;
+        border-radius: 6px;
+        width: fit-content;
+    }
+
+        .inline-upload-loader span {
+            font-size: 11px;
+            color: #4B5563;
+            font-weight: 500;
+        }
+
+    .inline-spinner {
+        width: 14px;
+        height: 14px;
+        border: 2px solid #E5E7EB;
+        border-top: 2px solid #0077B5;
+        border-radius: 50%;
+        animation: spin-field 0.8s linear infinite;
+    }
+
+    @@keyframes spin-field {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+</style>
+
+
+
 @code {
     private ApplicationSubmitRequest model = new();
     private bool isSubmitting = false;
@@ -184,18 +242,25 @@
     private string selectedMonth = "";
     private string selectedYear = "";
 
+    private bool isUploadingImage = false;
+    private bool isUploadingConnections = false;
+
+
+    // Update the selected month and update the LinkedIn account creation date
     private void OnMonthChanged(ChangeEventArgs e)
     {
         selectedMonth = e.Value?.ToString() ?? "";
         UpdateCreationDate();
     }
 
+    // Update the selected year and update the LinkedIn account creation date
     private void OnYearChanged(ChangeEventArgs e)
     {
         selectedYear = e.Value?.ToString() ?? "";
         UpdateCreationDate();
     }
 
+    // Update the LinkedIn account creation date based on selected month and year
     private void UpdateCreationDate()
     {
         if (!string.IsNullOrEmpty(selectedMonth) && !string.IsNullOrEmpty(selectedYear))
@@ -211,10 +276,7 @@
         }
     }
 
-
-    // متغير خاص بالتحكم في ظهور لودينغ رفع الصورة
-    private bool isUploadingImage = false;
-
+    // Handle file upload for screenshots
     private async Task UploadScreenshot(InputFileChangeEventArgs e, bool isConnections)
     {
         var file = e.File;
@@ -222,9 +284,9 @@
         {
             try
             {
-                // 1. تفعيل اللودينغ وإجبار واجهة المستخدم على التحديث فوراً
+                isUploadingConnections = isConnections;
                 isUploadingImage = true;
-                StateHasChanged(); // <--- الأقواس هنا هي السر كله!
+                StateHasChanged();
 
                 errorMessage = string.Empty;
 
@@ -232,7 +294,7 @@
                 if (file.Size > maxAllowedSize)
                 {
                     errorMessage = "حجم الصورة يتجاوز الحد الأقصى المسموح به (2 ميجابايت).";
-                    return; // هيروح للـ finally مباشرة ويطفي اللودينغ
+                    return;
                 }
 
                 var format = file.ContentType;
@@ -263,16 +325,13 @@
             }
             finally
             {
-                // 3. إطفاء اللودينغ وإجبار الشاشة على التحديث ليختفي فوراً
                 isUploadingImage = false;
-                StateHasChanged(); // <--- مهم جداً هنا برضه عشان يطفي اللودينغ
+                StateHasChanged();
             }
         }
     }
 
-
-
-
+    // Handle form submission
     private async Task HandleSubmit()
     {
         isSubmitting = true;
@@ -292,6 +351,7 @@
         isSubmitting = false;
     }
 
+    // Reset the form to its initial state
     private void ResetForm()
     {
         model = new();

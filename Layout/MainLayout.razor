@@ -1,4 +1,10 @@
 ﻿@inherits LayoutComponentBase
+@implements IDisposable
+@using LinkGate.frontend.Services.Shared 
+
+@inject LoadingService LoadingService
+
+<LoadingSpinner IsVisible="@isVisible" Message="@message" />
 
 <div class="saas-main-layout">
     <main class="layout-main">
@@ -7,3 +13,27 @@
         </article>
     </main>
 </div>
+
+@code {
+    private bool isVisible = false;
+    private string message = "";
+
+    protected override void OnInitialized()
+    {
+        // استخدام الـ instance اللي اتعمله inject (اسم كابيتال للـ Type و سمول للـ variable أو زي ما تحب)
+        LoadingService.OnLoadingStateChanged += UpdateLoadingState;
+    }
+
+    private void UpdateLoadingState(bool visible, string msg)
+    {
+        isVisible = visible;
+        message = msg;
+        InvokeAsync(StateHasChanged); // استخدام InvokeAsync عشان نضمن التحديث بحرية على الـ UI Thread
+    }
+
+    public void Dispose()
+    {
+        // إلغاء الاشتراك لمنع الـ Memory Leaks
+        LoadingService.OnLoadingStateChanged -= UpdateLoadingState;
+    }
+}
